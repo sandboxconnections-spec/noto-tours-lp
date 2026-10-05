@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Noto, Slowly — Private days in Nanao</title>
+<meta name="description" content="Three private days in Nanao, Noto: Zen and the sea, sushi and its origins, and paddling the bay. Up to 5 guests, hosted by locals.">
+<!-- v1 2026-10-05：本人「高級感薄くね？星のやを参考に、パクリはダメだからアップデート」で作り直し。
+     星のやから借りたのは"原理"だけ＝暗い地の質感・明朝の一行・余白・写真が主役・下の値段バー。
+     自前の更新点＝①地の色がツアーごとに移る（苔→漆→藍）②下の値段バーが見ているツアーに切り替わる③縦書きの和名を写真の脇に添える。
+     数字・行程の正本＝Cloude秘書/のとくる事業部/ノマド向けLP_3ツアー_工程と計測設計_2026-10-03.md -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Shippori+Mincho+B1:wght@400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#ece7dc; --sub:rgba(236,231,220,.62); --faint:rgba(236,231,220,.16);
+  --base:#0b0c0b;
+  --tint:#1a2219;               /* JSで切り替わる地の色 */
+  --serif:"Cormorant Garamond",serif;
+  --mincho:"Shippori Mincho B1",serif;
+  --sans:"Noto Sans JP",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--base);color:var(--ink);font:300 14px/2 var(--sans);letter-spacing:.03em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,100% - 48px);margin:0 auto}
+
+/* 地：色のにじみ＋粒子。スクロール位置でにじみの色が移る */
+.ground{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% 18%,var(--tint) 0%,rgba(11,12,11,0) 70%),var(--base);transition:--tint 1.6s}
+.ground:after{content:"";position:absolute;inset:-50%;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@property --tint{syntax:"<color>";inherits:true;initial-value:#1a2219}
+main,.hero,footer{position:relative;z-index:1}
+
+/* ===== header ===== */
+.hd{position:fixed;inset:0 0 auto;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:50;transition:background .6s,height .6s}
+.hd.solid{background:rgba(11,12,11,.72);backdrop-filter:blur(10px);height:60px}
+.hd__logo{font:300 22px/1 var(--serif);letter-spacing:.24em;text-transform:uppercase}
+.hd nav{display:flex;gap:34px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sub)}
+.hd nav a:hover{color:var(--ink)}
+@media (max-width:760px){.hd nav{display:none}.hd{padding:0 20px}.hd__logo{font-size:18px}}
+
+/* ===== hero：3枚がゆっくり入れ替わり、わずかに寄っていく ===== */
+.hero{height:100svh;min-height:600px;overflow:hidden}
+.slides{position:absolute;inset:0}
+.slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:slide 24s infinite}
+.slides img:nth-child(2){animation-delay:8s}.slides img:nth-child(3){animation-delay:16s}
+@keyframes slide{0%{opacity:0;transform:scale(1.02)}6%{opacity:1}33%{opacity:1}40%{opacity:0;transform:scale(1.1)}100%{opacity:0}}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.15) 40%,rgba(0,0,0,.7))}
+.hero__in{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px}
+.vmark{writing-mode:vertical-rl;font:400 15px/1 var(--mincho);letter-spacing:.6em;padding-top:.6em;margin-bottom:44px;border-right:1px solid rgba(255,255,255,.5);padding-right:12px}
+.hero h1{font:300 clamp(34px,5.2vw,64px)/1.25 var(--serif);letter-spacing:.04em}
+.hero h1 i{font-style:italic}
+.hero .sub{margin-top:30px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.scroll{position:absolute;left:50%;bottom:28px;width:1px;height:56px;background:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,0));z-index:1;animation:drip 2.6s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== 序文 ===== */
+.prologue{padding:200px 0 180px;text-align:center}
+.prologue .jp{font:400 13px/1 var(--mincho);letter-spacing:.8em;color:var(--sub)}
+.prologue h2{font:300 clamp(28px,3.6vw,42px)/1.45 var(--serif);margin:40px auto 0;max-width:760px;letter-spacing:.02em}
+.prologue p{max-width:520px;margin:44px auto 0;color:var(--sub)}
+.rule{width:1px;height:90px;background:var(--faint);margin:80px auto 0}
+
+/* ===== 3つの入口（文字だけ・大きく） ===== */
+.three{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--faint);border-bottom:1px solid var(--faint)}
+.three a{padding:56px 28px 50px;text-align:center;transition:background .6s}
+.three a+a{border-left:1px solid var(--faint)}
+.three a:hover{background:rgba(255,255,255,.03)}
+.three small{display:block;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--sub)}
+.three b{display:block;font:300 30px/1.2 var(--serif);margin:16px 0 6px;letter-spacing:.03em}
+.three span{font:400 12px/1 var(--mincho);letter-spacing:.3em;color:var(--sub)}
+@media (max-width:760px){.three{grid-template-columns:1fr}.three a+a{border-left:none;border-top:1px solid var(--faint)}.three a{padding:40px 20px}}
+
+/* ===== ツアー ===== */
+.tour{padding:200px 0 40px}
+.tour__title{text-align:center}
+.tour__title small{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--sub)}
+.tour__title h2{font:300 clamp(44px,6vw,80px)/1.05 var(--serif);margin-top:22px;letter-spacing:.02em}
+.tour__title .theme{margin-top:22px;font:300 italic 21px/1.5 var(--serif);color:var(--sub)}
+.season{display:inline-block;margin-top:26px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;border:1px solid var(--faint);padding:8px 16px}
+
+.plate{position:relative;margin-top:90px}
+.plate__main{width:100%;height:min(78vh,760px);overflow:hidden}
+.plate__main img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 2.4s cubic-bezier(.2,.6,.2,1)}
+.plate.in .plate__main img{transform:scale(1)}
+@media (max-width:760px){.slides img:first-child{object-position:78% 50%}.plate{margin-top:64px}.plate__main{height:auto;aspect-ratio:4/5}.plate .vname{top:-24px;font-size:14px;padding:14px 9px}}
+.plate .vname{position:absolute;top:-34px;right:4%;writing-mode:vertical-rl;font:400 16px/1 var(--mincho);letter-spacing:.55em;background:var(--base);padding:20px 12px;color:var(--ink)}
+.plate figcaption{margin-top:12px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--sub)}
+
+.story{display:grid;grid-template-columns:1fr 1fr;gap:96px;margin-top:120px;align-items:start}
+.story .lead{font:300 28px/1.55 var(--serif);letter-spacing:.01em}
+.story .txt{margin-top:32px;color:var(--sub)}
+.story .side{padding-bottom:8%}
+.story .side img{width:88%;aspect-ratio:3/2;object-fit:cover}
+.story .side img+img{width:58%;aspect-ratio:4/3;margin:-14% 0 0 auto;position:relative;box-shadow:0 0 0 10px var(--base)}
+@media (max-width:860px){.story{grid-template-columns:1fr;gap:56px;margin-top:72px}.story .lead{font-size:24px}}
+
+/* 1日の流れ＝縦の時間軸 */
+.day{margin-top:140px;display:grid;grid-template-columns:260px 1fr;gap:64px}
+.day h3{font:300 30px/1.3 var(--serif)}
+.day h3 + p{margin-top:14px;font-size:12px;color:var(--sub)}
+.day ol{list-style:none;border-left:1px solid var(--faint)}
+.day li{display:grid;grid-template-columns:86px 1fr;padding:12px 0 12px 28px;position:relative}
+.day li:before{content:"";position:absolute;left:-3px;top:23px;width:5px;height:5px;border-radius:50%;background:var(--ink);opacity:.6}
+.day time{font:300 20px/1.3 var(--serif);color:var(--sub)}
+@media (max-width:860px){.day{grid-template-columns:1fr;gap:28px;margin-top:96px}.day li{grid-template-columns:64px 1fr;padding-left:20px}}
+
+/* 料金の行＝表ではなく一列の文 */
+.terms{margin-top:120px;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);padding:56px 0;display:grid;grid-template-columns:1.1fr 1fr 1fr auto;gap:40px;align-items:center}
+.terms .yen{font:300 44px/1 var(--serif);letter-spacing:.02em}
+.terms .yen small{display:block;font:300 11px/1.6 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--sub);margin-top:10px}
+.terms dl div{font-size:12px;color:var(--sub);line-height:1.9}
+.terms dt{display:inline;letter-spacing:.2em;text-transform:uppercase;font-size:10px;margin-right:10px;color:var(--ink)}
+.terms dd{display:inline}
+.btn{display:inline-block;border:1px solid var(--ink);padding:18px 34px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;transition:background .5s,color .5s;white-space:nowrap;background:none;color:var(--ink);cursor:pointer;font-family:var(--sans)}
+.btn:hover{background:var(--ink);color:var(--base)}
+a:focus-visible,.btn:focus-visible{outline:1px solid var(--ink);outline-offset:4px}
+@media (max-width:960px){.terms{grid-template-columns:1fr 1fr;gap:28px}.terms .btn{grid-column:1/-1;text-align:center}}
+@media (max-width:560px){.terms{grid-template-columns:1fr}}
+
+/* ===== 予約のこと ===== */
+.how{padding:220px 0 160px;text-align:center}
+.how h2{font:300 40px/1.3 var(--serif)}
+.how .jp{font:400 12px/1 var(--mincho);letter-spacing:.6em;color:var(--sub);margin-top:18px}
+.how ol{list-style:none;max-width:620px;margin:64px auto 0;counter-reset:s}
+.how li{counter-increment:s;padding:22px 0;border-top:1px solid var(--faint);color:var(--sub)}
+.how li:last-child{border-bottom:1px solid var(--faint)}
+.how li:before{content:"0" counter(s);display:block;font:300 13px/1 var(--serif);letter-spacing:.2em;color:var(--ink);margin-bottom:8px}
+.how .note{max-width:620px;margin:40px auto 0;font-size:12px;color:var(--sub)}
+
+/* ===== 来かた ===== */
+.access{display:grid;grid-template-columns:1.2fr 1fr;gap:0;align-items:stretch}
+.access img{width:100%;height:100%;min-height:420px;object-fit:cover}
+.access div{padding:80px 64px;background:rgba(255,255,255,.03)}
+.access h2{font:300 34px/1.3 var(--serif)}
+.access p{margin-top:20px;color:var(--sub)}
+@media (max-width:860px){.access{grid-template-columns:1fr}.access div{padding:56px 24px}.access img{min-height:280px}}
+
+/* ===== 申込 ===== */
+.req{padding:200px 0 180px}
+.req__head{text-align:center}
+.req__head h2{font:300 44px/1.2 var(--serif)}
+.req__head p{max-width:500px;margin:24px auto 0;color:var(--sub)}
+form{max-width:720px;margin:80px auto 0}
+.f{display:block;margin-bottom:34px}
+.f>span{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--sub);margin-bottom:6px}
+form input,form select,form textarea{width:100%;font:300 16px/1.6 var(--sans);color:var(--ink);background:transparent;border:none;border-bottom:1px solid var(--faint);padding:10px 0;border-radius:0;color-scheme:dark}
+form select option{background:#111;color:var(--ink)}
+form textarea{min-height:90px;resize:vertical}
+form input:focus,form select:focus,form textarea:focus{outline:none;border-bottom-color:var(--ink)}
+.pick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pick label{position:relative;cursor:pointer;padding:22px 10px;text-align:center;border:1px solid var(--faint);transition:border-color .4s,background .4s}
+.pick b{display:block;font:300 21px/1.2 var(--serif)}
+.pick small{display:block;font-size:11px;color:var(--sub);margin-top:6px}
+.pick input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none}
+.pick label:has(input:checked){border-color:var(--ink);background:rgba(255,255,255,.05)}
+.pick label:has(input:focus-visible){outline:1px solid var(--ink);outline-offset:3px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.submit{text-align:center;margin-top:20px}
+.err{text-align:center;font-size:12px;color:#d9a79c;margin-top:16px;min-height:1em}
+.done{display:none;text-align:center;margin-top:80px}
+.done h3{font:300 32px/1.3 var(--serif)}
+.done p{color:var(--sub);margin-top:14px}
+@media (max-width:640px){.row2{grid-template-columns:1fr;gap:0}.pick{grid-template-columns:1fr}.pick label{padding:16px}}
+
+footer{border-top:1px solid var(--faint);padding:64px 0 140px;text-align:center;font-size:11px;color:var(--sub);letter-spacing:.06em}
+footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
+
+/* ===== 下の値段バー（見ているツアーに切り替わる） ===== */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 28px;background:rgba(11,12,11,.82);backdrop-filter:blur(10px);border-top:1px solid var(--faint);transform:translateY(100%);transition:transform .6s}
+.bar.on{transform:none}
+.bar__l small{display:block;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--sub)}
+.bar__l b{font:300 24px/1.2 var(--serif);letter-spacing:.02em}
+.bar__l b span{font:300 11px/1 var(--sans);color:var(--sub);margin-left:8px;letter-spacing:.06em}
+.bar .btn{padding:14px 26px;background:var(--ink);color:var(--base)}
+.bar .btn:hover{background:transparent;color:var(--ink)}
+@media (max-width:560px){.bar{padding:12px 16px}.bar__l b{font-size:20px}.bar .btn{padding:12px 16px;letter-spacing:.2em}}
+
+/* ふわっと */
+.fi{opacity:0;transform:translateY(30px);transition:opacity 1.6s ease,transform 1.6s ease}
+.fi.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.slides img{animation:none}.slides img:first-child{opacity:1}.scroll{animation:none}.fi{opacity:1;transform:none;transition:none}.plate__main img{transform:none;transition:none}}
+</style>
+</head>
+<body>
+<div class="ground" aria-hidden="true"></div>
+
+<header class="hd" id="hd">
+  <a class="hd__logo" href="#top">Noto, Slowly</a>
+  <nav><a href="#zen">Mindfulness</a><a href="#sushi">Gourmet</a><a href="#sup">Activity</a><a href="#request" data-tour="">Reserve</a></nav>
+</header>
+
+<section class="hero" id="top" data-sec="hero">
+  <div class="slides" aria-hidden="true">
+    <img src="img/hero-bay-sunset.jpg" alt="">
+    <img src="img/zen-gate.jpg" alt="">
+    <img src="img/sushi-3.jpg" alt="">
+  </div>
+  <div class="hero__in">
+    <p class="vmark" lang="ja">能登七尾</p>
+    <h1>Sit still. <i>Eat well.</i><br>Get on the water.</h1>
+    <p class="sub">Three private days on the Noto Peninsula</p>
+  </div>
+  <span class="scroll" aria-hidden="true"></span>
+</section>
+
+<main>
+  <section class="wrap prologue" data-sec="intro">
+    <p class="jp fi" lang="ja">ゆっくり、能登</p>
+    <h2 class="fi">A quiet port town on a closed bay, an hour by train from Kanazawa — and three days we would plan for a friend.</h2>
+    <p class="fi">We live and work in Nanao. Each day is private, for your group of up to five, with one of us beside you in English. You meet the people who brew the soy sauce, shape the sushi and keep the temple — never a tour counter.</p>
+    <div class="rule fi"></div>
+  </section>
+
+  <nav class="three" aria-label="The three days" data-sec="index">
+    <a href="#zen"><small>I · Mindfulness</small><b>Zen &amp; Sea</b><span lang="ja">禅と海</span></a>
+    <a href="#sushi"><small>II · Gourmet</small><b>Sushi and Its Origins</b><span lang="ja">鮨の源流</span></a>
+    <a href="#sup"><small>III · Activity</small><b>Paddle the Bay</b><span lang="ja">湾を漕ぐ</span></a>
+  </nav>
+
+  <!-- ===== I MINDFULNESS ===== -->
+  <section class="tour" id="zen" data-sec="zen" data-tint="#1c2619" data-price="150,000" data-name="Zen &amp; Sea">
+    <div class="wrap">
+      <div class="tour__title fi">
+        <small>I — Mindfulness</small>
+        <h2>Zen &amp; Sea</h2>
+        <p class="theme">An hour of silence at a temple of six centuries</p>
+      </div>
+      <figure class="plate fi">
+        <div class="plate__main"><img src="img/zen-gate.jpg" alt="The main gate of Sojiji Soin temple with red arched bridges" loading="lazy"></div>
+        <span class="vname" lang="ja">總持寺祖院</span>
+        <figcaption>Sojiji Soin, Monzen</figcaption>
+      </figure>
+      <div class="story">
+        <div class="fi">
+          <p class="lead">Learn zazen at a former head temple, eat in silence, work with your hands, and sit by the sea. End the day by lighting a candle you chose yourself.</p>
+          <p class="txt">Sojiji Soin was the head temple of the Soto school for almost 600 years. You learn the form of zazen and sit for thirty minutes. In the afternoon you carve a pattern into lacquer chopsticks at a craftsman’s shop, then pick a hand-made Japanese candle on Ipponsugi Street to light after dinner.</p>
+        </div>
+        <div class="side fi">
+          <img src="img/zen-autumn.jpg" alt="Temple buildings among autumn maples" loading="lazy">
+          <img src="img/zen-sit.jpg" alt="A person sitting cross-legged on a wooden veranda" loading="lazy" style="object-position:50% 40%">
+        </div>
+      </div>
+      <div class="day fi">
+        <div><h3>The day</h3><p>8:15 – 21:30</p></div>
+        <ol>
+          <li><time>8:15</time><span>Meet at Nanao Station</span></li>
+          <li><time>9:50</time><span>Sojiji Soin — walk up to the gate</span></li>
+          <li><time>10:40</time><span>Learn the form, sit for 30 minutes</span></li>
+          <li><time>12:30</time><span>Lunch in Anamizu</span></li>
+          <li><time>14:35</time><span>Carve chinkin chopsticks at Araki</span></li>
+          <li><time>16:00</time><span>Choose tonight’s candle on Ipponsugi Street</span></li>
+          <li><time>17:15</time><span>A long dinner, about three hours</span></li>
+          <li><time>21:25</time><span>Light your candle</span></li>
+        </ol>
+      </div>
+      <div class="terms fi">
+        <p class="yen">¥150,000<small>per person · excl. tax</small></p>
+        <dl><div><dt>Group</dt><dd>Private, up to 5</dd></div><div><dt>Meet</dt><dd>Nanao Station</dd></div></dl>
+        <dl><div><dt>Includes</dt><dd>Zazen instruction, chopstick workshop, your candle, dinner, guide</dd></div></dl>
+        <a class="btn" href="#request" data-tour="zen">Reserve</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== II GOURMET ===== -->
+  <section class="tour" id="sushi" data-sec="sushi" data-tint="#2a1512" data-price="200,000" data-name="Sushi and Its Origins">
+    <div class="wrap">
+      <div class="tour__title fi">
+        <small>II — Gourmet</small>
+        <h2>Sushi and Its Origins</h2>
+        <p class="theme">Follow the soy sauce all the way to the counter</p>
+      </div>
+      <figure class="plate fi">
+        <div class="plate__main"><img src="img/sushi-3.jpg" alt="Three pieces of nigiri: white fish, seared fish and red tuna" loading="lazy" style="object-position:50% 45%"></div>
+        <span class="vname" lang="ja">鮨の源流</span>
+        <figcaption>Taisho Sushi, Nanao</figcaption>
+      </figure>
+      <div class="story">
+        <div class="fi">
+          <p class="lead">By day, learn the soy sauce and the fish, then shape sushi yourself and feel how hard it is. At night, a master’s counter gives you the answer.</p>
+          <p class="txt">The soy sauce comes from Torii Shoyu, a hundred-year-old brewery in a registered cultural property on Ipponsugi Street. In the afternoon, a local sushi chef teaches your group to shape a few pieces — just a few, to save room for dinner. Dinner is at Taisho Sushi near the station, where you sit with the regulars and eat what they eat.</p>
+        </div>
+        <div class="side fi">
+          <img src="img/soy-koji.jpg" alt="Koji being spread on wooden trays at a soy sauce brewery" loading="lazy">
+          <img src="img/sushi-4.jpg" alt="Sweet shrimp, yellowtail, sea bream and squid nigiri" loading="lazy" style="object-position:50% 55%">
+        </div>
+      </div>
+      <div class="day fi">
+        <div><h3>The day</h3><p>10:00 – 22:00 · Mondays, Thursdays, Fridays</p></div>
+        <ol>
+          <li><time>10:00</time><span>Meet at Nanao Station</span></li>
+          <li><time>10:15</time><span>Morning at the fish market — choose the fish</span></li>
+          <li><time>12:30</time><span>Torii Shoyu soy sauce brewery</span></li>
+          <li><time>14:00</time><span>Shape your own nigiri at Chiyozushi</span></li>
+          <li><time>15:00</time><span>Free time — rest at your inn</span></li>
+          <li><time>18:30</time><span>Dinner at the counter of Taisho Sushi</span></li>
+          <li><time>20:30</time><span>A drink by candlelight</span></li>
+        </ol>
+      </div>
+      <div class="terms fi">
+        <p class="yen">¥200,000<small>per person · excl. tax</small></p>
+        <dl><div><dt>Group</dt><dd>Private, up to 5</dd></div><div><dt>Meet</dt><dd>Nanao Station, on foot</dd></div></dl>
+        <dl><div><dt>Includes</dt><dd>Brewery visit, sushi lesson, sushi dinner, one drink, guide. Tell us if anyone does not eat raw fish.</dd></div></dl>
+        <a class="btn" href="#request" data-tour="sushi">Reserve</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== III ACTIVITY ===== -->
+  <section class="tour" id="sup" data-sec="sup" data-tint="#0f2329" data-price="150,000" data-name="Paddle the Bay">
+    <div class="wrap">
+      <div class="tour__title fi">
+        <small>III — Activity</small>
+        <h2>Paddle the Bay</h2>
+        <p class="theme">On water so still it barely moves</p>
+        <span class="season">Limited season</span>
+      </div>
+      <figure class="plate fi">
+        <div class="plate__main"><img src="img/sup.jpg" alt="People sitting on paddleboards on clear water near a rock island" loading="lazy" style="object-position:50% 60%"></div>
+        <span class="vname" lang="ja">七尾湾</span>
+        <figcaption>Off Notojima Island</figcaption>
+      </figure>
+      <div class="story">
+        <div class="fi">
+          <p class="lead">Paddle the calm water off Notojima Island in the morning, work in a rice field in the afternoon, and end with dinner upstairs at an old shop in town.</p>
+          <p class="txt">Nanao Bay is enclosed by Notojima Island, so the water is usually flat enough for first-timers. The paddle is with a local outdoor guide and only your group on the water. In season, the afternoon is rice planting (May) or harvest (September). Only while the water is warm — send us your dates and we will tell you if the bay is still open.</p>
+        </div>
+        <div class="side fi">
+          <img src="img/terraces.jpg" alt="Rice terraces running down to the Sea of Japan" loading="lazy">
+          <img src="img/rice-sea.jpg" alt="Ripe rice ears with the sea behind" loading="lazy">
+        </div>
+      </div>
+      <div class="day fi">
+        <div><h3>The day</h3><p>8:00 – 21:00</p></div>
+        <ol>
+          <li><time>8:00</time><span>Meet at Nanao Station</span></li>
+          <li><time>9:00</time><span>SUP off Notojima, private, about 2.5 hours</span></li>
+          <li><time>11:50</time><span>Lunch at an island diner</span></li>
+          <li><time>13:30</time><span>Rice planting (May) or harvest (September)</span></li>
+          <li><time>16:00</time><span>Rest at your inn in Wakura Onsen</span></li>
+          <li><time>18:00</time><span>Dinner upstairs at Umimachi Shoten</span></li>
+          <li><time>20:00</time><span>A drink by candlelight</span></li>
+        </ol>
+      </div>
+      <div class="terms fi">
+        <p class="yen">¥150,000<small>per person · excl. tax</small></p>
+        <dl><div><dt>Group</dt><dd>Private, up to 5</dd></div><div><dt>Season</dt><dd>While the water is warm</dd></div></dl>
+        <dl><div><dt>Includes</dt><dd>SUP with a local outdoor guide, rice field work, dinner, guide</dd></div></dl>
+        <a class="btn" href="#request" data-tour="sup">Reserve</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 予約のこと ===== -->
+  <section class="wrap how" data-sec="how" data-tint="#1d1b17">
+    <h2 class="fi">Reservations</h2>
+    <p class="jp fi" lang="ja">ご予約について</p>
+    <ol class="fi">
+      <li>Send a request with your day, two or three dates, and the size of your group.</li>
+      <li>We confirm with the temple, the chefs and the guides, and write back by email.</li>
+      <li>You receive a secure card payment link. Your day is held once it is paid.</li>
+    </ol>
+    <p class="note fi">Prices exclude consumption tax (10%). Lodging and travel to Nanao Station are not included.</p>
+  </section>
+
+  <section class="access" data-sec="access">
+    <img src="img/house-dusk.jpg" alt="A wooden house by the sea at dusk, its windows lit" loading="lazy">
+    <div class="fi">
+      <h2>Getting to Nanao</h2>
+      <p>Every day starts and ends at Nanao Station, in the middle of the Noto Peninsula, on the JR Nanao Line from Kanazawa.</p>
+      <p>The days end in the evening, after the last train back to Kanazawa has left. Plan to stay the night in Nanao or at Wakura Onsen nearby.</p>
+    </div>
+  </section>
+
+  <!-- ===== 申込 ===== -->
+  <section class="wrap req" id="request" data-sec="request">
+    <div class="req__head fi">
+      <h2>Reserve a day</h2>
+      <p>This is a request, not a payment. A person in Nanao reads every one and replies by email.</p>
+    </div>
+    <form id="form" class="fi" novalidate>
+      <div class="f">
+        <span>Your day</span>
+        <div class="pick" role="radiogroup">
+          <label><input type="radio" name="tour" value="zen" required><b>Zen &amp; Sea</b><small>¥150,000</small></label>
+          <label><input type="radio" name="tour" value="sushi"><b>Sushi</b><small>¥200,000</small></label>
+          <label><input type="radio" name="tour" value="sup"><b>Paddle the Bay</b><small>¥150,000 · seasonal</small></label>
+        </div>
+      </div>
+      <div class="row2">
+        <label class="f"><span>First choice</span><input type="date" name="date1" required></label>
+        <label class="f"><span>Second choice</span><input type="date" name="date2"></label>
+      </div>
+      <div class="row2">
+        <label class="f"><span>Guests</span><select name="guests" required><option value="">—</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+        <label class="f"><span>Staying in Japan at</span><input type="text" name="staying" placeholder="Kanazawa, Fukuoka…"></label>
+      </div>
+      <div class="row2">
+        <label class="f"><span>Name</span><input type="text" name="name" autocomplete="name" required></label>
+        <label class="f"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+      </div>
+      <label class="f"><span>Food, allergies, anything else</span><textarea name="message"></textarea></label>
+      <div class="submit"><button class="btn" type="submit">Send request</button></div>
+      <p class="err" id="err" role="alert"></p>
+    </form>
+    <div class="done" id="done" role="status">
+      <h3>Thank you.</h3>
+      <p>We have your request and will write back by email to confirm the date.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <b>Noto, Slowly</b>
+  SandBoxConnections LLC · Nanao, Ishikawa, Japan<br>
+  Photo of Torii Shoyu brewery: READYFOR “Torii Shoyu”
+</footer>
+
+<div class="bar" id="bar" aria-live="polite">
+  <div class="bar__l"><small id="barName">Three private days</small><b id="barPrice">¥150,000<span>~ per person</span></b></div>
+  <a class="btn" href="#request" id="barBtn" data-tour="">Reserve</a>
+</div>
+
+<script>
+// ===== 申込と計測の受け口（GAS WebアプリのURLを入れると送信が有効になる。空の間は送らない） =====
+const ENDPOINT = "";
+const SRC = new URLSearchParams(location.search).get("src") || "direct";
+const SID = Math.random().toString(36).slice(2, 10);
+function send(type, data) {
+  const body = JSON.stringify({ type, sid: SID, src: SRC, t: new Date().toISOString(), lang: navigator.language, tz: Intl.DateTimeFormat().resolvedOptions().timeZone, mobile: matchMedia("(max-width:760px)").matches, ...data });
+  if (!ENDPOINT) { console.debug("[track]", body); return; }
+  navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "text/plain" }));
+}
+send("view", {});
+
+const hd = document.getElementById("hd"), bar = document.getElementById("bar"), ground = document.querySelector(".ground");
+const barName = document.getElementById("barName"), barPrice = document.getElementById("barPrice"), barBtn = document.getElementById("barBtn");
+
+// 順番＝惹きつける → 値段 → 申込（本人 10/6）。値段バーは、ツアーの値段の行を一度見てから出す。
+// ヒーロー・序文・写真・物語の間は値段を出さない。申込欄の中では隠す。
+let pastHero = false, inReq = false, priceSeen = false;
+const syncBar = () => bar.classList.toggle("on", pastHero && priceSeen && !inReq);
+new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; hd.classList.toggle("solid", pastHero); syncBar(); }, { rootMargin: "-72px 0px 0px 0px" }).observe(document.querySelector(".hero"));
+new IntersectionObserver(([e]) => { inReq = e.isIntersecting; syncBar(); }, { threshold: .15 }).observe(document.getElementById("request"));
+const priceIo = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  if (!priceSeen) { priceSeen = true; syncBar(); }
+  send("price_seen", { tour: e.target.closest(".tour").id });
+  priceIo.unobserve(e.target);
+}), { threshold: .6 });
+document.querySelectorAll(".tour .terms").forEach(t => priceIo.observe(t));
+
+// 地の色と値段バー：画面の中央にあるツアーに合わせる
+const tintIo = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const s = e.target;
+  ground.style.setProperty("--tint", s.dataset.tint);
+  if (s.dataset.price) { barName.innerHTML = s.dataset.name; barPrice.innerHTML = `¥${s.dataset.price}<span>per person · excl. tax</span>`; barBtn.dataset.tour = s.id; }
+}), { rootMargin: "-45% 0px -45% 0px" });
+document.querySelectorAll("[data-tint]").forEach(s => tintIo.observe(s));
+
+// 申込ボタン → フォームのツアーを選んだ状態に
+document.querySelectorAll("a[data-tour]").forEach(a => a.addEventListener("click", () => {
+  const t = a.dataset.tour;
+  if (t) document.querySelector(`input[name=tour][value=${t}]`).checked = true;
+  send("cta", { tour: t || "nav", from: a.id === "barBtn" ? "bar" : "page" });
+}));
+
+// セクションごとの滞在秒数
+const seen = {};
+const secIo = new IntersectionObserver(es => es.forEach(e => {
+  const k = e.target.dataset.sec;
+  if (e.isIntersecting) seen[k] = { ...(seen[k] || { ms: 0 }), at: performance.now() };
+  else if (seen[k] && seen[k].at) { seen[k].ms += performance.now() - seen[k].at; seen[k].at = 0; }
+}), { threshold: .3 });
+document.querySelectorAll("[data-sec]").forEach(s => secIo.observe(s));
+addEventListener("pagehide", () => {
+  const out = {};
+  for (const k in seen) out[k] = Math.round((seen[k].ms + (seen[k].at ? performance.now() - seen[k].at : 0)) / 1000);
+  send("dwell", { sec: out });
+});
+
+// フォーム
+const form = document.getElementById("form");
+form.addEventListener("submit", ev => {
+  ev.preventDefault();
+  const err = document.getElementById("err");
+  if (!form.checkValidity()) { err.textContent = "Please choose a day, a date, the number of guests, your name and email."; return; }
+  err.textContent = "";
+  send("request", Object.fromEntries(new FormData(form)));
+  form.style.display = "none";
+  document.getElementById("done").style.display = "block";
+});
+const today = new Date().toISOString().slice(0, 10);
+form.querySelectorAll("input[type=date]").forEach(i => i.min = today);
+
+// スクロールでふわっと表示（写真は寄りから引きへ）
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll(".fi").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
