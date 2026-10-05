@@ -426,16 +426,41 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
 </div>
 
 <script>
-// ===== 申込と計測の受け口（GAS WebアプリのURLを入れると送信が有効になる。空の間は送らない） =====
-const ENDPOINT = "";
-const SRC = new URLSearchParams(location.search).get("src") || "direct";
-const SID = Math.random().toString(36).slice(2, 10);
+// ===== 申込と計測の受け口＝GAS（gas/Code.gs）→ スプレッドシート「Noto Slowly LP 計測」 =====
+// 配るリンクは末尾に ?src=名前（例 ?src=colive）。自分で試すときは #test（記録はされるが集計から外れる）
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzpsUj1l8gusjvJQfsgudRZ1zF40k1MA-iro1B3Cb0VvdK1b2blYnmIMe4Z5GZnJl3f/exec";
+const Q = new URLSearchParams(location.search);
+const SRC = (Q.get("src") || "direct").replace(/[^\w-]/g, "").slice(0, 40) || "direct";
+const TEST = location.hash === "#test" || Q.has("test");
+const rid = () => Math.random().toString(36).slice(2, 12);
+const SID = (() => { try { return sessionStorage.nsSid || (sessionStorage.nsSid = rid()); } catch { return rid(); } })();
+const VID = (() => { try { return localStorage.nsVid || (localStorage.nsVid = rid()); } catch { return ""; } })(); // 2回目に来た人を見分ける
+let REF = ""; try { REF = document.referrer ? new URL(document.referrer).hostname : ""; } catch {}
+function payload(type, data) {
+  return JSON.stringify({ type, sid: SID, vid: VID, src: SRC, test: TEST, ref: REF, lang: navigator.language, tz: Intl.DateTimeFormat().resolvedOptions().timeZone, mobile: matchMedia("(max-width:760px)").matches, vw: innerWidth, ...data });
+}
 function send(type, data) {
-  const body = JSON.stringify({ type, sid: SID, src: SRC, t: new Date().toISOString(), lang: navigator.language, tz: Intl.DateTimeFormat().resolvedOptions().timeZone, mobile: matchMedia("(max-width:760px)").matches, ...data });
-  if (!ENDPOINT) { console.debug("[track]", body); return; }
-  navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "text/plain" }));
+  const body = payload(type, data);
+  if (!ENDPOINT || location.hostname === "localhost") { console.debug("[track]", body); if (!ENDPOINT || !TEST) return; }
+  try { navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "text/plain" })); } catch {}
 }
 send("view", {});
+
+// どこまで下りたか（25/50/75/100%・1回ずつ）
+const depthSent = new Set();
+addEventListener("scroll", () => {
+  const h = document.documentElement.scrollHeight - innerHeight;
+  const pct = h > 0 ? (scrollY / h) * 100 : 100;
+  [25, 50, 75, 100].forEach(d => { if (pct >= d - 1 && !depthSent.has(d)) { depthSent.add(d); send("scroll", { depth: d }); } });
+}, { passive: true });
+
+// 区画に初めて入った（1回ずつ）
+const entered = new Set();
+const enterIo = new IntersectionObserver(es => es.forEach(e => {
+  const k = e.target.dataset.sec;
+  if (e.isIntersecting && !entered.has(k)) { entered.add(k); send("sec_enter", { sec: k }); }
+}), { threshold: .25 });
+document.querySelectorAll("[data-sec]").forEach(s => enterIo.observe(s));
 
 const hd = document.getElementById("hd"), bar = document.getElementById("bar"), ground = document.querySelector(".ground");
 const barName = document.getElementById("barName"), barPrice = document.getElementById("barPrice"), barBtn = document.getElementById("barBtn");
@@ -467,7 +492,7 @@ document.querySelectorAll("[data-tint]").forEach(s => tintIo.observe(s));
 document.querySelectorAll("a[data-tour]").forEach(a => a.addEventListener("click", () => {
   const t = a.dataset.tour;
   if (t) document.querySelector(`input[name=tour][value=${t}]`).checked = true;
-  send("cta", { tour: t || "nav", from: a.id === "barBtn" ? "bar" : "page" });
+  send("cta", { tour: t || "", from: a.id === "barBtn" ? "bar" : (a.closest(".hd") ? "nav" : "page") });
 }));
 
 // セクションごとの滞在秒数
@@ -478,22 +503,37 @@ const secIo = new IntersectionObserver(es => es.forEach(e => {
   else if (seen[k] && seen[k].at) { seen[k].ms += performance.now() - seen[k].at; seen[k].at = 0; }
 }), { threshold: .3 });
 document.querySelectorAll("[data-sec]").forEach(s => secIo.observe(s));
-addEventListener("pagehide", () => {
+// 累計の秒を、画面を離れるたびに送る（スマホは pagehide が来ないことがある＝visibilitychange も使う。集計はセッションごとの最大を取る）
+function sendDwell() {
   const out = {};
   for (const k in seen) out[k] = Math.round((seen[k].ms + (seen[k].at ? performance.now() - seen[k].at : 0)) / 1000);
-  send("dwell", { sec: out });
-});
+  if (Object.keys(out).length) send("dwell", { sec: out });
+}
+addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") sendDwell(); });
+addEventListener("pagehide", sendDwell);
 
 // フォーム
 const form = document.getElementById("form");
-form.addEventListener("submit", ev => {
+let formOpened = false;
+form.addEventListener("focusin", () => { if (!formOpened) { formOpened = true; send("open_form", { tour: form.tour.value || "" }); } });
+form.addEventListener("submit", async ev => {
   ev.preventDefault();
-  const err = document.getElementById("err");
+  const err = document.getElementById("err"), btn = form.querySelector("button");
   if (!form.checkValidity()) { err.textContent = "Please choose a day, a date, the number of guests, your name and email."; return; }
-  err.textContent = "";
-  send("request", Object.fromEntries(new FormData(form)));
-  form.style.display = "none";
-  document.getElementById("done").style.display = "block";
+  err.textContent = ""; btn.disabled = true; btn.textContent = "Sending…";
+  const f = Object.fromEntries(new FormData(form));
+  try {
+    if (ENDPOINT && !(location.hostname === "localhost" && !TEST)) {
+      const r = await fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain" }, body: payload("request", { form: f }) });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error);
+    } else console.debug("[request]", f);
+    form.style.display = "none";
+    document.getElementById("done").style.display = "block";
+  } catch (x) {
+    err.textContent = "Sorry, your request could not be sent. Please try again in a moment.";
+    btn.disabled = false; btn.textContent = "Send request";
+  }
 });
 const today = new Date().toISOString().slice(0, 10);
 form.querySelectorAll("input[type=date]").forEach(i => i.min = today);
