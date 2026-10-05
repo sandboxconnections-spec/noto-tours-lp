@@ -12,7 +12,7 @@ var SECTIONS = ["hero", "intro", "index", "zen", "sushi", "sup", "how", "access"
 var SID_RE = /^[a-z0-9]{6,24}$/;
 
 var EV_H = ["received_at", "sid", "type", "src", "test", "vid", "target", "from", "value", "lang", "tz", "device", "ref", "vw"];
-var RQ_H = ["received_at", "sid", "src", "test", "tour", "date1", "date2", "guests", "staying", "name", "email", "message", "対応状況", "メモ"];
+var RQ_H = ["received_at", "sid", "src", "test", "kind", "tour", "date1", "date2", "guests", "staying", "name", "email", "message", "対応状況", "メモ"];
 
 // ---------- 受け取り ----------
 function doPost(e) {
@@ -31,7 +31,7 @@ function doPost(e) {
     if (p.type === "request") {
       var rq = sheet_(ss, "requests", RQ_H);
       var f = p.form || {};
-      rq.appendRow([new Date(), p.sid, safe_(p.src), p.test ? "test" : "", f.tour, safe_(f.date1), safe_(f.date2), f.guests,
+      rq.appendRow([new Date(), p.sid, safe_(p.src), p.test ? "test" : "", f.kind === "waitlist" ? "waitlist" : "request", f.tour, safe_(f.date1), safe_(f.date2), f.guests,
                     safe_(f.staying), safe_(f.name), safe_(f.email), safe_(f.message), "未対応", ""]);
       if (!p.test) notify_(f, p.src, ss.getUrl());
     }
@@ -79,7 +79,8 @@ function check_(p) {
     var f = p.form || {};
     if (TOURS.indexOf(f.tour) < 0) return "bad_form_tour";
     if (["2", "3", "4", "5"].indexOf(String(f.guests)) < 0) return "bad_guests";
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(f.date1 || ""))) return "bad_date";
+    if (["request", "waitlist", undefined].indexOf(f.kind) < 0) return "bad_kind";
+    if (f.kind !== "waitlist" && !/^\d{4}-\d{2}-\d{2}$/.test(String(f.date1 || ""))) return "bad_date"; // 空き待ち（SUP来季）は日付なし
     if (f.date2 && !/^\d{4}-\d{2}-\d{2}$/.test(String(f.date2))) return "bad_date";
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(f.email || "")) || String(f.email).length > 200) return "bad_email";
     if (!String(f.name || "").trim() || String(f.name).length > 120) return "bad_name";
@@ -106,7 +107,7 @@ function notify_(f, src, url) {
   var names = {zen: "Zen & Sea（マインドフルネス）", sushi: "Sushi and Its Origins（寿司）", sup: "Paddle the Bay（SUP）"};
   var to = Session.getEffectiveUser().getEmail();
   if (!to) return;
-  MailApp.sendEmail(to, "【LP申込】" + names[f.tour] + " " + f.guests + "名 " + f.date1,
+  MailApp.sendEmail(to, (f.kind === "waitlist" ? "【LP空き待ち】" : "【LP申込】") + names[f.tour] + " " + f.guests + "名 " + (f.date1 || "来季"),
     "Noto, Slowly のLPから申込が届きました。\n\n" +
     "ツアー：" + names[f.tour] + "\n第1希望：" + f.date1 + "\n第2希望：" + (f.date2 || "—") + "\n人数：" + f.guests + "名\n" +
     "名前：" + f.name + "\nメール：" + f.email + "\n滞在先：" + (f.staying || "—") + "\nメッセージ：" + (f.message || "—") + "\n" +
@@ -155,7 +156,7 @@ function summary_(ss) {
     ["3 値段を見た", U('events!C2:C="price_seen"'), "", "", "2→3で落ちる＝写真と物語で惹きつけきれていない"],
     ["4 申込ボタンを押した", U('events!C2:C="cta"'), "", "", "3→4で落ちる＝値段か中身が合っていない"],
     ["5 フォームに書き始めた", U('events!C2:C="open_form"'), "", "", ""],
-    ["6 申込を送った", '=COUNTIFS(requests!D2:D,"<>test",requests!B2:B,"<>")', "", "", "5→6で落ちる＝フォームが重い"],
+    ["6 申込を送った", '=COUNTIFS(requests!D2:D,"<>test",requests!E2:E,"request")', "", "", "5→6で落ちる＝フォームが重い"],
     [""],
     ["ツアー別", "ツアーまで来た", "値段を見た", "申込ボタン", "申込", "値段→申込ボタン"]
   ];
@@ -172,7 +173,7 @@ function summary_(ss) {
       U('events!C2:C="sec_enter",events!G2:G="' + t + '"'),
       U('events!C2:C="price_seen",events!G2:G="' + t + '"'),
       U('events!C2:C="cta",events!G2:G="' + t + '"'),
-      '=COUNTIFS(requests!D2:D,"<>test",requests!E2:E,"' + t + '")',
+      '=COUNTIFS(requests!D2:D,"<>test",requests!F2:F,"' + t + '")',
       '=IFERROR(D' + rr + '/C' + rr + ',"")']]);
   });
   sm.getRange("F11:F13").setNumberFormat("0%");
