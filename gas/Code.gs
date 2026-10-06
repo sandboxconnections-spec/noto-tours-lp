@@ -12,7 +12,7 @@ var SECTIONS = ["hero", "intro", "index", "zen", "sushi", "sup", "how", "access"
 var SID_RE = /^[a-z0-9]{6,24}$/;
 
 var EV_H = ["received_at", "sid", "type", "src", "test", "vid", "target", "from", "value", "lang", "tz", "device", "ref", "vw", "ui"];   // ui＝ページを見た言語（en/ja・v4で追加）
-var RQ_H = ["received_at", "sid", "src", "test", "kind", "tour", "date1", "date2", "guests", "staying", "name", "email", "message", "対応状況", "メモ", "ui"];
+var RQ_H = ["received_at", "sid", "src", "test", "kind", "tour", "date1", "date2", "guests", "staying", "name", "email", "message", "対応状況", "メモ", "ui", "rid"];   // rid＝申込番号（同じ番号は1回だけ記録＝送り直しで二重にしない）
 
 // ---------- 受け取り ----------
 function doPost(e) {
@@ -25,6 +25,11 @@ function doPost(e) {
     if (err) return out_({ok: false, error: err});
     lock.waitLock(20000); locked = true;
     var ss = ss_();
+    if (p.type === "request" && p.form.rid) {
+      var rqs = sheet_(ss, "requests", RQ_H);
+      var last = rqs.getLastRow(), col = RQ_H.indexOf("rid") + 1;
+      if (last > 1 && rqs.getRange(2, col, last - 1, 1).createTextFinder(p.form.rid).matchEntireCell(true).findNext()) return out_({ok: true, duplicate: true});
+    }
     var ev = sheet_(ss, "events", EV_H);
     var rows = toEventRows_(p);
     ev.getRange(ev.getLastRow() + 1, 1, rows.length, EV_H.length).setValues(rows);
@@ -32,7 +37,7 @@ function doPost(e) {
       var rq = sheet_(ss, "requests", RQ_H);
       var f = p.form || {};
       rq.appendRow([new Date(), p.sid, safe_(p.src), p.test ? "test" : "", f.kind === "waitlist" ? "waitlist" : "request", f.tour, safe_(f.date1), safe_(f.date2), f.guests,
-                    safe_(f.staying), safe_(f.name), safe_(f.email), safe_(f.message), "未対応", "", ui_(p)]);
+                    safe_(f.staying), safe_(f.name), safe_(f.email), safe_(f.message), "未対応", "", ui_(p), f.rid || ""]);
       f.ui = ui_(p); notify_(f, p.src, ss.getUrl(), !!p.test); // テストも知らせる（件名に【テスト】）＝通知の道を確かめられるように
     }
     summary_(ss);
@@ -78,6 +83,7 @@ function check_(p) {
   if (p.type === "request") {
     var f = p.form || {};
     if (TOURS.indexOf(f.tour) < 0) return "bad_form_tour";
+    if (f.rid !== undefined && !/^[a-z0-9]{8,24}$/.test(String(f.rid))) return "bad_rid";
     if (["2", "3", "4", "5"].indexOf(String(f.guests)) < 0) return "bad_guests";
     if (["request", "waitlist", undefined].indexOf(f.kind) < 0) return "bad_kind";
     if (f.kind !== "waitlist" && !/^\d{4}-\d{2}-\d{2}$/.test(String(f.date1 || ""))) return "bad_date"; // 空き待ち（SUP来季）は日付なし

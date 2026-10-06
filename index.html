@@ -788,11 +788,19 @@ form.addEventListener("submit", async ev => {
   err.textContent = ""; btn.disabled = true; btn.textContent = T("sending");
   const f = Object.fromEntries(new FormData(form));
   f.kind = isWait() ? "waitlist" : "request";
+  f.rid = f.rid || rid() + rid().slice(0, 4); // 申込番号（受け口は同じ番号を1回しか記録しない）
   if (f.kind === "waitlist") { f.date1 = ""; f.date2 = ""; }
   try {
     if (ENDPOINT && !(location.hostname === "localhost" && !TEST)) {
-      const r = await fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain" }, body: payload("request", { form: f }) });
-      const j = await r.json();
+      // Google の受け口は返事に2〜40秒かかることがある＝10秒待って返事が無ければ完了画面を出し、送信は裏で続ける。
+      // 通信そのものが失敗したら同じ申込番号で1回だけ送り直す（受け口が二重を弾く）。中身の誤り（ok:false）だけは画面にエラーを出す
+      const body = payload("request", { form: f });
+      const post = () => fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain" }, body, keepalive: true }).then(r => r.json());
+      const attempt = post().catch(() => new Promise(r => setTimeout(r, 1500)).then(post)).catch(() => {
+        try { navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "text/plain" })); } catch {}
+        return { ok: true, beacon: true };
+      });
+      const j = await Promise.race([attempt, new Promise(r => setTimeout(() => r({ ok: true, waited: true }), 10000))]);
       if (!j.ok) throw new Error(j.error);
     } else console.debug("[request]", f);
     document.getElementById("doneMsg").textContent = T(f.kind === "waitlist" ? "doneWait" : "doneReq");
