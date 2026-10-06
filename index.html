@@ -202,6 +202,14 @@ form input:focus,form select:focus,form textarea:focus{outline:none;border-botto
 @media (max-width:640px){.row2{grid-template-columns:1fr;gap:0}.pick{grid-template-columns:1fr}.pick label{padding:16px}}
 
 footer{border-top:1px solid var(--faint);padding:64px 0 140px;text-align:center;font-size:11px;color:var(--sub);letter-spacing:.06em}
+footer .legal{width:min(760px,100% - 40px);margin:28px auto 0;text-align:left}
+footer .legal summary{cursor:pointer;text-align:center;list-style:none;text-decoration:underline;text-underline-offset:4px}
+footer .legal summary::-webkit-details-marker{display:none}
+footer .legal dl{margin-top:24px;border-top:1px solid var(--faint)}
+footer .legal dl div{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:12px 0;border-bottom:1px solid var(--faint)}
+footer .legal dt{color:var(--ink)}
+footer .legal dd{color:var(--sub)}
+@media (max-width:640px){footer .legal dl div{grid-template-columns:1fr;gap:4px}}
 footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
 
 /* ===== 下の値段バー（見ているツアーに切り替わる） ===== */
@@ -417,7 +425,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         <ol>
           <li>Send a request with your day, two dates, and the size of your group.</li>
           <li>We check with every stop and reply by email within 48 hours.</li>
-          <li>You receive a secure card payment link. Your day is held once it is paid.</li>
+          <li>You receive a secure card payment link. Pay within 3 days and your day is booked.</li>
         </ol>
       </div>
       <div class="fi">
@@ -479,6 +487,22 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
   <b>Noto, Slowly</b>
   <span>SandBoxConnections LLC · Nanao, Ishikawa, Japan</span><br>
   <span>Photo of Torii Shoyu brewery: READYFOR “Torii Shoyu”</span>
+  <details class="legal" id="legal">
+    <summary>Legal notice (Specified Commercial Transactions Act)</summary>
+    <dl>
+      <div><dt>Seller</dt><dd>SandBoxConnections LLC</dd></div>
+      <div><dt>Representative</dt><dd>岡本岳人 (Representative Partner)</dd></div>
+      <div><dt>Address</dt><dd>Kanazawa Mirai no Machi Sozokan, 3-11-1 Nomachi, Kanazawa, Ishikawa, Japan</dd></div>
+      <div><dt>Phone</dt><dd>+81 90-1281-0774</dd></div>
+      <div><dt>Email</dt><dd>sandboxconnections@gmail.com</dd></div>
+      <div><dt>Price</dt><dd>As shown for each day, per person, including consumption tax</dd></div>
+      <div><dt>Other costs</dt><dd>Lodging and travel to and from Nanao Station</dd></div>
+      <div><dt>Payment</dt><dd>Credit card, through a secure payment link we send by email</dd></div>
+      <div><dt>When to pay</dt><dd>Within 3 days of our confirmation email. If payment does not arrive in time, the date is released.</dd></div>
+      <div><dt>When the service is provided</dt><dd>On the confirmed date</dd></div>
+      <div><dt>Cancellation</dt><dd>Tell us by email. Free up to 14 days before your day; 50% refunded from 13 to 4 days before; no refund within 3 days. If weather or one of our hosts makes the day impossible, we offer another date or a full refund. Refunds go back to the card you paid with.</dd></div>
+    </dl>
+  </details>
 </footer>
 
 <div class="bar" id="bar" aria-live="polite">
@@ -581,7 +605,7 @@ const JA = {
  "How booking works": "申込の流れ",
  "Send a request with your day, two dates, and the size of your group.": "希望の日・候補日2つ・人数をお送りください。",
  "We check with every stop and reply by email within 48 hours.": "すべての訪問先に確かめて、48時間以内にメールでお返事します。",
- "You receive a secure card payment link. Your day is held once it is paid.": "カード決済のリンクをお送りします。お支払いが済んだ時点で予約が確定します。",
+ "You receive a secure card payment link. Pay within 3 days and your day is booked.": "カード決済のリンクをお送りします。3日以内のお支払いで予約が確定します。",
  "If plans change": "キャンセルについて",
  "Free cancellation up to 14 days before your day. 50% is refunded from 13 to 4 days before; within 3 days, no refund. If weather or one of our hosts makes the day impossible, we offer another date or a full refund.": "14日前までは無料です。13日前から4日前までは50%を返金し、3日前を過ぎると返金はできません。天候や受け入れ先の都合で実施できない場合は、別の日をご案内するか、全額を返金します。",
  "Prices include consumption tax (10%). Lodging and travel to Nanao Station are not included.": "表示価格は消費税（10%）込みです。宿泊と、七尾駅までの交通費は含みません。",
@@ -600,7 +624,30 @@ const JA = {
  "Food, allergies, anything else": "食事・アレルギー・そのほか",
  "Thank you.": "ありがとうございます。",
  "SandBoxConnections LLC · Nanao, Ishikawa, Japan": "合同会社SandBoxConnections・石川県七尾市",
- "Photo of Torii Shoyu brewery: READYFOR “Torii Shoyu”": "鳥居醤油店の写真：READYFOR「鳥居醤油店」"
+ "Photo of Torii Shoyu brewery: READYFOR “Torii Shoyu”": "鳥居醤油店の写真：READYFOR「鳥居醤油店」",
+ "Legal notice (Specified Commercial Transactions Act)": "特定商取引法に基づく表記",
+ "Seller": "販売事業者",
+ "SandBoxConnections LLC": "合同会社SandBoxConnections",
+ "Representative": "運営責任者",
+ "岡本岳人 (Representative Partner)": "代表社員 岡本岳人",
+ "Address": "所在地",
+ "Kanazawa Mirai no Machi Sozokan, 3-11-1 Nomachi, Kanazawa, Ishikawa, Japan": "石川県金沢市野町三丁目11番1号 金沢未来のまち創造館",
+ "Phone": "電話番号",
+ "+81 90-1281-0774": "090-1281-0774",
+ "Email": "メールアドレス",
+ "sandboxconnections@gmail.com": "sandboxconnections@gmail.com",
+ "Price": "販売価格",
+ "As shown for each day, per person, including consumption tax": "各ツアーに表示（1名あたり・消費税込み）",
+ "Other costs": "商品代金以外の必要料金",
+ "Lodging and travel to and from Nanao Station": "宿泊費、七尾駅までの往復の交通費",
+ "Payment": "支払方法",
+ "Credit card, through a secure payment link we send by email": "クレジットカード（メールでお送りする決済リンクから）",
+ "When to pay": "支払時期",
+ "Within 3 days of our confirmation email. If payment does not arrive in time, the date is released.": "予約確定のメールをお送りしてから3日以内。期限までにお支払いがない場合は、仮押さえを解除します。",
+ "When the service is provided": "提供時期",
+ "On the confirmed date": "予約が確定した催行日",
+ "Cancellation": "キャンセル",
+ "Tell us by email. Free up to 14 days before your day; 50% refunded from 13 to 4 days before; no refund within 3 days. If weather or one of our hosts makes the day impossible, we offer another date or a full refund. Refunds go back to the card you paid with.": "メールでご連絡ください。14日前までは無料、13日前から4日前までは50%を返金、3日前を過ぎると返金はできません。天候や受け入れ先の都合で実施できない場合は、別の日をご案内するか全額を返金します。返金は、お支払いに使ったカードへ行います。"
 };
 const UI = {
   en: { title: "Noto, Slowly — Private days in Nanao", barName: "Three private days", barPrice: "from ¥165,000<span>per person</span>", unit: "per person · incl. tax", yen: n => "¥" + n, reqBtn: "Request a date", waitBtn: "Join the waitlist", send: "Send request", sending: "Sending…", reqTitle: "Request a day", waitTitle: "Join the waitlist", reqLead: "This is a request, not a payment. A person in Nanao reads every one and replies by email.", waitLead: "No dates and no payment for now. We will write to you first when dates for May 2027 open.", errReq: "Please choose a day, a date, the number of guests, your name and email.", errWait: "Please choose the number of guests, your name and email.", errSend: "Sorry, your request could not be sent. Please try again in a moment.", doneReq: "We have your request and will reply by email within 48 hours.", doneWait: "You are on the waitlist. We will write to you first when dates for May 2027 open.", switchTo: "日本語", switchLabel: "日本語で表示", placeholder: "Kanazawa, Fukuoka…" },
