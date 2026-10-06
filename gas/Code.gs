@@ -4,7 +4,7 @@
 // 「ファネル」シートは初回に自動で作る（#test のアクセスは集計から外す）。
 
 var SPREADSHEET_ID = ""; // 空＝この受け口が紐づいているスプレッドシート
-var SUMMARY_VER = "v1";  // 変えると次の呼び出しでファネルシートを作り直す（記録の行は動かさない）
+var SUMMARY_VER = "v3";  // 変えると次の呼び出しでファネルシートを作り直す（記録の行は動かさない）
 
 var TYPES = ["view", "scroll", "sec_enter", "price_seen", "cta", "open_form", "request", "dwell"];
 var TOURS = ["zen", "sushi", "sup"];
@@ -33,7 +33,7 @@ function doPost(e) {
       var f = p.form || {};
       rq.appendRow([new Date(), p.sid, safe_(p.src), p.test ? "test" : "", f.kind === "waitlist" ? "waitlist" : "request", f.tour, safe_(f.date1), safe_(f.date2), f.guests,
                     safe_(f.staying), safe_(f.name), safe_(f.email), safe_(f.message), "未対応", ""]);
-      if (!p.test) notify_(f, p.src, ss.getUrl());
+      notify_(f, p.src, ss.getUrl(), !!p.test); // テストも知らせる（件名に【テスト】）＝通知の道を確かめられるように
     }
     summary_(ss);
     return out_({ok: true});
@@ -103,11 +103,11 @@ function toEventRows_(p) {
   return [base(p.tour || "", safe_(String(p.from || "").slice(0, 20)), "")];
 }
 
-function notify_(f, src, url) {
+function notify_(f, src, url, test) {
   var names = {zen: "Zen & Sea（マインドフルネス）", sushi: "Sushi and Its Origins（寿司）", sup: "Paddle the Bay（SUP）"};
   var to = Session.getEffectiveUser().getEmail();
   if (!to) return;
-  MailApp.sendEmail(to, (f.kind === "waitlist" ? "【LP空き待ち】" : "【LP申込】") + names[f.tour] + " " + f.guests + "名 " + (f.date1 || "来季"),
+  MailApp.sendEmail(to, (test ? "【テスト】" : "") + (f.kind === "waitlist" ? "【LP空き待ち】" : "【LP申込】") + names[f.tour] + " " + f.guests + "名 " + (f.date1 || "来季"),
     "Noto, Slowly のLPから申込が届きました。\n\n" +
     "ツアー：" + names[f.tour] + "\n第1希望：" + f.date1 + "\n第2希望：" + (f.date2 || "—") + "\n人数：" + f.guests + "名\n" +
     "名前：" + f.name + "\nメール：" + f.email + "\n滞在先：" + (f.staying || "—") + "\nメッセージ：" + (f.message || "—") + "\n" +
@@ -147,7 +147,8 @@ function summary_(ss) {
   sm = ss.insertSheet("ファネル", 0);
   // events の列：A受信 B sid C type D src E test F vid G target H from I value
   var NT = 'events!E2:E<>"test"';
-  var U = function (cond) { return '=IFERROR(COUNTUNIQUE(FILTER(events!B2:B,' + NT + ',' + cond + ')),0)'; };
+  // 該当なしのとき FILTER はエラーを返し、COUNTUNIQUE はそのエラーを1件と数える＝ROWS(UNIQUE()) を IFERROR で0にする（v2で修正）
+  var U = function (cond) { return '=IFERROR(ROWS(UNIQUE(FILTER(events!B2:B,' + NT + ',' + cond + '))),0)'; };
   var rows = [
     ["ファネル（#test を除く・人数＝セッションの数）", "", "", "", "", "", "", SUMMARY_VER],
     ["段", "人数", "最初の段から", "1つ前の段から", "読み方"],
@@ -166,6 +167,11 @@ function summary_(ss) {
     if (r > 3) sm.getRange(r, 4).setFormula('=IFERROR(B' + r + '/B' + (r - 1) + ',"")');
   }
   sm.getRange("C3:D8").setNumberFormat("0%");
+  // F列＝テストも含めた人数（#test で通したときに、記録と式が動いているかを確かめる用）
+  var UA = function (cond) { return "=IFERROR(ROWS(UNIQUE(FILTER(events!B2:B," + cond + "))),0)"; };
+  sm.getRange(2, 6).setValue("（テストも含む）").setFontColor("#999999");
+  sm.getRange(3, 6, 6, 1).setFormulas([[UA('events!C2:C="view"')], [UA('REGEXMATCH(events!C2:C&events!G2:G,"^sec_enter(zen|sushi|sup)$")')],
+    [UA('events!C2:C="price_seen"')], [UA('events!C2:C="cta"')], [UA('events!C2:C="open_form"')], ['=COUNTIFS(requests!E2:E,"request")']]).setFontColor("#999999");
   var names = {zen: "Zen & Sea", sushi: "Sushi", sup: "Paddle the Bay"};
   TOURS.forEach(function (t, i) {
     var rr = 11 + i;
@@ -181,7 +187,7 @@ function summary_(ss) {
   sm.getRange(15, 1, 1, 6).setValues([["どこから（?src=）", "開いた", "値段を見た", "申込ボタン", "申込", "開いた→申込"]]);
   sm.getRange(16, 1).setFormula(
     '=IFERROR(LET(s,UNIQUE(FILTER(events!D2:D,events!C2:C="view",' + NT + ')),' +
-    'f,LAMBDA(x,ty,IFERROR(COUNTUNIQUE(FILTER(events!B2:B,events!D2:D=x,events!C2:C=ty,' + NT + ')),0)),' +
+    'f,LAMBDA(x,ty,IFERROR(ROWS(UNIQUE(FILTER(events!B2:B,events!D2:D=x,events!C2:C=ty,' + NT + '))),0)),' +
     'HSTACK(s,MAP(s,LAMBDA(x,f(x,"view"))),MAP(s,LAMBDA(x,f(x,"price_seen"))),MAP(s,LAMBDA(x,f(x,"cta"))),' +
     'MAP(s,LAMBDA(x,COUNTIFS(requests!C2:C,x,requests!D2:D,"<>test"))),' +
     'MAP(s,LAMBDA(x,IFERROR(COUNTIFS(requests!C2:C,x,requests!D2:D,"<>test")/f(x,"view"),""))))),"（まだありません）")');

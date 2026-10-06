@@ -498,7 +498,7 @@ const entered = new Set();
 const enterIo = new IntersectionObserver(es => es.forEach(e => {
   const k = e.target.dataset.sec;
   if (e.isIntersecting && !entered.has(k)) { entered.add(k); send("sec_enter", { sec: k }); }
-}), { threshold: .25 });
+}), { rootMargin: "-50% 0px -50% 0px" }); // 画面の真ん中の線を区画が通ったら＝長いツアーの区画でも取れる
 document.querySelectorAll("[data-sec]").forEach(s => enterIo.observe(s));
 
 const hd = document.getElementById("hd"), bar = document.getElementById("bar"), ground = document.querySelector(".ground");
@@ -541,7 +541,7 @@ const secIo = new IntersectionObserver(es => es.forEach(e => {
   const k = e.target.dataset.sec;
   if (e.isIntersecting) seen[k] = { ...(seen[k] || { ms: 0 }), at: performance.now() };
   else if (seen[k] && seen[k].at) { seen[k].ms += performance.now() - seen[k].at; seen[k].at = 0; }
-}), { threshold: .3 });
+}), { rootMargin: "-50% 0px -50% 0px" }); // 真ん中の線にかかっている区画＝いま読んでいる区画（同時に1つだけ）
 document.querySelectorAll("[data-sec]").forEach(s => secIo.observe(s));
 // 累計の秒を、画面を離れるたびに送る（スマホは pagehide が来ないことがある＝visibilitychange も使う。集計はセッションごとの最大を取る）
 function sendDwell() {
