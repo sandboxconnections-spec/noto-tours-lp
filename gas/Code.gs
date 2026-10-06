@@ -4,15 +4,15 @@
 // 「ファネル」シートは初回に自動で作る（#test のアクセスは集計から外す）。
 
 var SPREADSHEET_ID = ""; // 空＝この受け口が紐づいているスプレッドシート
-var SUMMARY_VER = "v3";  // 変えると次の呼び出しでファネルシートを作り直す（記録の行は動かさない）
+var SUMMARY_VER = "v5";  // 変えると次の呼び出しでファネルシートを作り直す（記録の行は動かさない）
 
 var TYPES = ["view", "scroll", "sec_enter", "price_seen", "cta", "open_form", "request", "dwell"];
 var TOURS = ["zen", "sushi", "sup"];
 var SECTIONS = ["hero", "intro", "index", "zen", "sushi", "sup", "how", "access", "request"];
 var SID_RE = /^[a-z0-9]{6,24}$/;
 
-var EV_H = ["received_at", "sid", "type", "src", "test", "vid", "target", "from", "value", "lang", "tz", "device", "ref", "vw"];
-var RQ_H = ["received_at", "sid", "src", "test", "kind", "tour", "date1", "date2", "guests", "staying", "name", "email", "message", "対応状況", "メモ"];
+var EV_H = ["received_at", "sid", "type", "src", "test", "vid", "target", "from", "value", "lang", "tz", "device", "ref", "vw", "ui"];   // ui＝ページを見た言語（en/ja・v4で追加）
+var RQ_H = ["received_at", "sid", "src", "test", "kind", "tour", "date1", "date2", "guests", "staying", "name", "email", "message", "対応状況", "メモ", "ui"];
 
 // ---------- 受け取り ----------
 function doPost(e) {
@@ -32,8 +32,8 @@ function doPost(e) {
       var rq = sheet_(ss, "requests", RQ_H);
       var f = p.form || {};
       rq.appendRow([new Date(), p.sid, safe_(p.src), p.test ? "test" : "", f.kind === "waitlist" ? "waitlist" : "request", f.tour, safe_(f.date1), safe_(f.date2), f.guests,
-                    safe_(f.staying), safe_(f.name), safe_(f.email), safe_(f.message), "未対応", ""]);
-      notify_(f, p.src, ss.getUrl(), !!p.test); // テストも知らせる（件名に【テスト】）＝通知の道を確かめられるように
+                    safe_(f.staying), safe_(f.name), safe_(f.email), safe_(f.message), "未対応", "", ui_(p)]);
+      f.ui = ui_(p); notify_(f, p.src, ss.getUrl(), !!p.test); // テストも知らせる（件名に【テスト】）＝通知の道を確かめられるように
     }
     summary_(ss);
     return out_({ok: true});
@@ -94,7 +94,7 @@ function toEventRows_(p) {
   var base = function (target, from, value) {
     return [new Date(), p.sid, p.type, safe_(p.src), p.test ? "test" : "", p.vid || "", target, from, value,
             safe_(String(p.lang || "").slice(0, 20)), safe_(String(p.tz || "").slice(0, 40)), p.mobile ? "mobile" : "desktop",
-            safe_(String(p.ref || "").slice(0, 80)), typeof p.vw === "number" ? p.vw : ""];
+            safe_(String(p.ref || "").slice(0, 80)), typeof p.vw === "number" ? p.vw : "", ui_(p)];
   };
   if (p.type === "dwell") return Object.keys(p.sec).map(function (k) { return base(k, "", p.sec[k]); });
   if (p.type === "scroll") return [base("", "", p.depth)];
@@ -111,9 +111,10 @@ function notify_(f, src, url, test) {
     "Noto, Slowly のLPから申込が届きました。\n\n" +
     "ツアー：" + names[f.tour] + "\n第1希望：" + f.date1 + "\n第2希望：" + (f.date2 || "—") + "\n人数：" + f.guests + "名\n" +
     "名前：" + f.name + "\nメール：" + f.email + "\n滞在先：" + (f.staying || "—") + "\nメッセージ：" + (f.message || "—") + "\n" +
-    "どこから：" + (src || "direct") + "\n\nシート：" + url + "\n※まだ返信していません。確定の連絡とStripeのリンクは手で送ってください。");
+    "どこから：" + (src || "direct") + "\n言語：" + (f.ui === "ja" ? "日本語" : "英語") + "\n\nシート：" + url + "\n※まだ返信していません。確定の連絡とStripeのリンクは手で送ってください。");
 }
 
+function ui_(p) { return p.ui === "ja" ? "ja" : "en"; }
 function safe_(v) {
   if (v === null || v === undefined) return "";
   var s = String(v).slice(0, 5000);
@@ -134,6 +135,9 @@ function sheet_(ss, name, h) {
     sh.getRange("A:A").setNumberFormat("yyyy-mm-dd hh:mm:ss");
     var first = ss.getSheetByName("シート1") || ss.getSheetByName("Sheet1");
     if (first && first.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(first);
+  } else if (sh.getLastColumn() < h.length) {
+    var cur = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+    if (h.slice(0, cur.length).join("\t") === cur.join("\t")) sh.getRange(1, cur.length + 1, 1, h.length - cur.length).setValues([h.slice(cur.length)]).setFontWeight("bold");
   }
   return sh;
 }
@@ -206,7 +210,14 @@ function summary_(ss) {
   sm.getRange(31, 1, 1, 2).setValues([["スクロール", "届いた人"]]);
   [25, 50, 75, 100].forEach(function (d, i) { sm.getRange(32 + i, 1, 1, 2).setValues([[d + "%", U('events!C2:C="scroll",events!I2:I=' + d)]]); });
 
-  [1, 2, 10, 15, 27, 31].forEach(function (r) { sm.getRange(r, 1, 1, 10).setFontWeight("bold"); });
+  // 言語別（events の O列＝ui・requests の P列＝ui）
+  sm.getRange(27, 4, 1, 4).setValues([["言語", "開いた", "値段を見た", "申込"]]).setFontWeight("bold");
+  [["英語", "en"], ["日本語", "ja"]].forEach(function (x, i) {
+    sm.getRange(28 + i, 4, 1, 4).setValues([[x[0], U('events!C2:C="view",events!O2:O="' + x[1] + '"'), U('events!C2:C="price_seen",events!O2:O="' + x[1] + '"'),
+      '=COUNTIFS(requests!D2:D,"<>test",requests!E2:E,"request",requests!P2:P,"' + x[1] + '")']]);
+  });
+  sm.getRange("E28:G29").setNumberFormat("0"); // F16:F40 の % 書式が重なるため人数に戻す
+  [1, 2, 10, 15, 27, 31].forEach(function (r) { sm.getRange(r, 1, 1, 3).setFontWeight("bold"); });
   sm.getRange("H1").setFontColor("#999999");
   sm.setColumnWidth(1, 260); sm.setColumnWidth(5, 120);
 }

@@ -49,6 +49,27 @@ main,.hero,footer{position:relative;z-index:1}
 .hd nav a:hover{color:var(--ink)}
 @media (max-width:760px){.hd nav{display:none}.hd{padding:0 20px}.hd__logo{font-size:18px}}
 
+.langbtn{margin-left:auto;margin-right:28px;background:none;border:1px solid var(--faint);color:var(--ink);font:400 11px/1 var(--sans);letter-spacing:.16em;padding:8px 12px;cursor:pointer}
+.langbtn:hover{border-color:var(--ink)}
+@media (max-width:760px){.langbtn{margin-right:0}}
+
+/* 日本語の組み（明朝の見出しは字間を広げ、大きさを一段下げる・斜体は使わない） */
+html[lang=ja] body{line-height:2.05;letter-spacing:.05em}
+html[lang=ja] i,html[lang=ja] .hero h1 i{font-style:normal}
+html[lang=ja] .hero h1{font:400 clamp(28px,4.2vw,52px)/1.6 var(--mincho);letter-spacing:.16em}
+html[lang=ja] .hero .sub{letter-spacing:.24em;text-transform:none}
+html[lang=ja] .prologue h2{font:400 clamp(21px,2.5vw,30px)/1.9 var(--mincho);letter-spacing:.08em;max-width:720px}
+html[lang=ja] .three b{font:400 23px/1.4 var(--mincho);letter-spacing:.1em}
+html[lang=ja] .tour__title h2{font:400 clamp(32px,4.4vw,54px)/1.3 var(--mincho);letter-spacing:.14em}
+html[lang=ja] .tour__title .theme{font:400 16px/1.8 var(--mincho);letter-spacing:.14em}
+html[lang=ja] .story .lead{font:400 21px/2 var(--mincho);letter-spacing:.06em}
+html[lang=ja] .day h3,html[lang=ja] .qa h3,html[lang=ja] .access h2,html[lang=ja] .how h2,html[lang=ja] .req__head h2,html[lang=ja] .done h3{font-family:var(--mincho);font-weight:400;letter-spacing:.1em}
+html[lang=ja] .day h3{font-size:24px}html[lang=ja] .qa h3{font-size:18px;letter-spacing:.04em}
+html[lang=ja] .how h2,html[lang=ja] .req__head h2{font-size:32px}html[lang=ja] .access h2{font-size:28px}
+html[lang=ja] .pick b{font:400 17px/1.4 var(--mincho)}
+html[lang=ja] .bar__l b{font-family:var(--serif)}
+@media (max-width:860px){html[lang=ja] .story .lead{font-size:18px}}
+
 /* ===== hero：3枚がゆっくり入れ替わり、わずかに寄っていく ===== */
 .hero{height:100svh;min-height:600px;overflow:hidden}
 .slides{position:absolute;inset:0}
@@ -204,6 +225,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
 
 <header class="hd" id="hd">
   <a class="hd__logo" href="#top">Noto, Slowly</a>
+  <button class="langbtn" id="langBtn" type="button" lang="ja" aria-label="日本語で表示">日本語</button>
   <nav><a href="#zen">Mindfulness</a><a href="#sushi">Gourmet</a><a href="#sup">Activity</a><a href="#request" data-tour="">Request</a></nav>
 </header>
 
@@ -236,7 +258,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
   </nav>
 
   <!-- ===== I MINDFULNESS ===== -->
-  <section class="tour" id="zen" data-sec="zen" data-tint="#1c2619" data-price="150,000" data-name="Zen &amp; Sea">
+  <section class="tour" id="zen" data-sec="zen" data-tint="#1c2619" data-price="165,000" data-name="Zen &amp; Sea" data-name-ja="禅と海">
     <div class="wrap">
       <div class="tour__title fi">
         <small>I — Mindfulness</small>
@@ -272,8 +294,8 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         </ol>
       </div>
       <div class="terms fi">
-        <p class="yen">¥150,000<small>per person · excl. tax</small></p>
-        <dl><div><dt>Group</dt><dd>Private, up to 5</dd></div><div><dt>Meet</dt><dd>Nanao Station</dd></div></dl>
+        <p class="yen"><span>¥165,000</span><small>per person · incl. tax</small></p>
+        <dl><div><dt>Group</dt><dd>Private, 2 to 5</dd></div><div><dt>Meet</dt><dd>Nanao Station</dd></div></dl>
         <dl><div><dt>Includes</dt><dd>Zazen instruction, chopstick workshop, your candle, dinner, guide</dd></div></dl>
         <a class="btn" href="#request" data-tour="zen">Request this day</a>
       </div>
@@ -281,7 +303,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
   </section>
 
   <!-- ===== II GOURMET ===== -->
-  <section class="tour" id="sushi" data-sec="sushi" data-tint="#2a1512" data-price="200,000" data-name="Sushi and Its Origins">
+  <section class="tour" id="sushi" data-sec="sushi" data-tint="#2a1512" data-price="220,000" data-name="Sushi and Its Origins" data-name-ja="鮨の源流をたどる">
     <div class="wrap">
       <div class="tour__title fi">
         <small>II — Gourmet</small>
@@ -316,8 +338,8 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         </ol>
       </div>
       <div class="terms fi">
-        <p class="yen">¥200,000<small>per person · excl. tax</small></p>
-        <dl><div><dt>Group</dt><dd>Private, up to 5</dd></div><div><dt>Meet</dt><dd>Nanao Station, on foot</dd></div></dl>
+        <p class="yen"><span>¥220,000</span><small>per person · incl. tax</small></p>
+        <dl><div><dt>Group</dt><dd>Private, 2 to 5</dd></div><div><dt>Meet</dt><dd>Nanao Station, on foot</dd></div></dl>
         <dl><div><dt>Includes</dt><dd>Brewery visit, sushi lesson, sushi dinner, one drink, guide. Tell us if anyone does not eat raw fish.</dd></div></dl>
         <a class="btn" href="#request" data-tour="sushi">Request this day</a>
       </div>
@@ -325,7 +347,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
   </section>
 
   <!-- ===== III ACTIVITY ===== -->
-  <section class="tour" id="sup" data-sec="sup" data-tint="#0f2329" data-price="150,000" data-name="Paddle the Bay · May 2027" data-cta="Join the waitlist">
+  <section class="tour" id="sup" data-sec="sup" data-tint="#0f2329" data-price="165,000" data-name="Paddle the Bay · May 2027" data-name-ja="七尾湾を漕ぐ・2027年5月" data-cta="Join the waitlist" data-cta-ja="空き待ちに登録">
     <div class="wrap">
       <div class="tour__title fi">
         <small>III — Activity</small>
@@ -361,8 +383,8 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         </ol>
       </div>
       <div class="terms fi">
-        <p class="yen">¥150,000<small>per person · excl. tax</small></p>
-        <dl><div><dt>Group</dt><dd>Private, up to 5</dd></div><div><dt>Season</dt><dd>Next from May 2027</dd></div></dl>
+        <p class="yen"><span>¥165,000</span><small>per person · incl. tax</small></p>
+        <dl><div><dt>Group</dt><dd>Private, 2 to 5</dd></div><div><dt>Season</dt><dd>Next from May 2027</dd></div></dl>
         <dl><div><dt>Includes</dt><dd>SUP with a local outdoor guide, rice field work, dinner, guide</dd></div></dl>
         <a class="btn" href="#request" data-tour="sup">Join the waitlist</a>
       </div>
@@ -403,7 +425,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         <p>Free cancellation up to 14 days before your day. 50% is refunded from 13 to 4 days before; within 3 days, no refund. If weather or one of our hosts makes the day impossible, we offer another date or a full refund.</p>
       </div>
     </div>
-    <p class="note fi">Prices exclude consumption tax (10%). Lodging and travel to Nanao Station are not included.</p>
+    <p class="note fi">Prices include consumption tax (10%). Lodging and travel to Nanao Station are not included.</p>
   </section>
 
   <section class="access" data-sec="access">
@@ -425,8 +447,8 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
       <div class="f">
         <span>Your day</span>
         <div class="pick" role="radiogroup">
-          <label><input type="radio" name="tour" value="zen" required><b>Zen &amp; Sea</b><small>¥150,000</small></label>
-          <label><input type="radio" name="tour" value="sushi"><b>Sushi</b><small>¥200,000</small></label>
+          <label><input type="radio" name="tour" value="zen" required><b>Zen &amp; Sea</b><small>¥165,000</small></label>
+          <label><input type="radio" name="tour" value="sushi"><b>Sushi</b><small>¥220,000</small></label>
           <label><input type="radio" name="tour" value="sup"><b>Paddle the Bay</b><small>Waitlist · May 2027</small></label>
         </div>
       </div>
@@ -455,20 +477,166 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
 
 <footer>
   <b>Noto, Slowly</b>
-  SandBoxConnections LLC · Nanao, Ishikawa, Japan<br>
-  Photo of Torii Shoyu brewery: READYFOR “Torii Shoyu”
+  <span>SandBoxConnections LLC · Nanao, Ishikawa, Japan</span><br>
+  <span>Photo of Torii Shoyu brewery: READYFOR “Torii Shoyu”</span>
 </footer>
 
 <div class="bar" id="bar" aria-live="polite">
-  <div class="bar__l"><small id="barName">Three private days</small><b id="barPrice">from ¥150,000<span>per person</span></b></div>
+  <div class="bar__l"><small id="barName">Three private days</small><b id="barPrice">from ¥165,000<span>per person</span></b></div>
   <a class="btn" href="#request" id="barBtn" data-tour="">Request a date</a>
 </div>
 
 <script>
+const Q = new URLSearchParams(location.search);
+const hd = document.getElementById("hd"), bar = document.getElementById("bar"), ground = document.querySelector(".ground");
+const barName = document.getElementById("barName"), barPrice = document.getElementById("barPrice"), barBtn = document.getElementById("barBtn");
+const form = document.getElementById("form");
+
+// ===== 言語（英語＝HTMLそのもの／日本語＝下の対応表で差し替え）。正本はこの1ファイルだけ（2ファイルに分けない＝ずれるため） =====
+// 英語の文を直したら、JA の左側（英語の文）も同じに直す。直し忘れは ?lang=ja&check で画面の上に一覧が出る
+const JA = {
+ "Mindfulness": "マインドフルネス",
+ "Gourmet": "グルメ",
+ "Activity": "アクティビティ",
+ "Request": "申込",
+ "Sit still. <i>Eat well.</i><br>Get on the water.": "静かに坐る。<br><i>よく味わう。</i><br>湾へ漕ぎ出す。",
+ "Three private days on the Noto Peninsula": "能登・七尾で過ごす、貸切の3つの1日",
+ "ゆっくり、能登": "NOTO, SLOWLY",
+ "A quiet port town on a closed bay, an hour by train from Kanazawa — and three days we would plan for a friend.": "金沢から電車で約1時間、穏やかな湾に面した港町で。友人を案内するように組んだ、3つの1日です。",
+ "We live and work in Nanao. Each day is private, for your group of up to five, with one of us beside you in English. You meet the people who brew the soy sauce, shape the sushi and keep the temple — never a tour counter.": "私たちは七尾で暮らし、働いています。どの日も1組だけの貸切で、2〜5名。私たちのうち1人が1日中ご一緒します。会うのは観光の窓口ではなく、醤油を仕込む人、鮨を握る人、寺を守る人です。",
+ "I · Mindfulness": "I · マインドフルネス",
+ "II · Gourmet": "II · グルメ",
+ "III · Activity": "III · アクティビティ",
+ "Zen &amp; Sea": "禅と海",
+ "禅と海": "Zen &amp; Sea",
+ "Sushi and Its Origins": "鮨の源流をたどる",
+ "鮨の源流": "Sushi and Its Origins",
+ "Paddle the Bay": "七尾湾を漕ぐ",
+ "湾を漕ぐ": "Paddle the Bay",
+ "The day": "1日の流れ",
+ "Meet at Nanao Station": "七尾駅に集合",
+ "Group": "人数",
+ "Private, 2 to 5": "貸切・2〜5名",
+ "Meet": "集合",
+ "Nanao Station": "七尾駅",
+ "Includes": "含むもの",
+ "Request this day": "この日を申し込む",
+ "per person · incl. tax": "1名・税込",
+ "¥165,000": "165,000円",
+ "¥220,000": "220,000円",
+ "A drink by candlelight": "ろうそくの灯りで一杯",
+ "I — Mindfulness": "I — マインドフルネス",
+ "An hour of silence at a temple of six centuries": "六百年の禅寺で、黙って坐る",
+ "Sojiji Soin, Monzen": "總持寺祖院（輪島市門前町）",
+ "Learn zazen at a former head temple, eat in silence, work with your hands, and sit by the sea. End the day by lighting a candle you chose yourself.": "かつての大本山で坐禅を習い、黙って食べ、手を動かし、海を前に坐る。最後は自分で選んだろうそくを灯して、1日を終えます。",
+ "Sojiji Soin was the head temple of the Soto school for almost 600 years. You learn the form of zazen and sit for thirty minutes. In the afternoon you carve a pattern into lacquer chopsticks at a craftsman’s shop, then pick a hand-made Japanese candle on Ipponsugi Street to light after dinner.": "總持寺祖院は、約600年にわたって曹洞宗の大本山だった寺です。坐禅の作法を習い、30分坐ります。午後は職人の店で漆の箸に模様を彫り、一本杉通りで、夕食のあとに灯す和ろうそくを1本選びます。",
+ "8:15 – 21:30": "8:15〜21:30",
+ "Sojiji Soin — walk up to the gate": "總持寺祖院へ。山門まで歩く",
+ "Learn the form, sit for 30 minutes": "作法を習い、30分坐る",
+ "Lunch in Anamizu": "穴水で昼食",
+ "Carve chinkin chopsticks at Araki": "漆陶舗あらきで沈金の箸を彫る",
+ "Choose tonight’s candle on Ipponsugi Street": "一本杉通りで今夜のろうそくを選ぶ",
+ "A long dinner, about three hours": "約3時間かけて夕食",
+ "Light your candle": "ろうそくを灯して終わり",
+ "Zazen instruction, chopstick workshop, your candle, dinner, guide": "坐禅の指導、箸づくり、ろうそく1本、夕食、案内",
+ "II — Gourmet": "II — グルメ",
+ "Follow the soy sauce all the way to the counter": "醤油の蔵から、鮨のカウンターまで",
+ "Taisho Sushi, Nanao": "大将寿司（七尾市）",
+ "By day, learn the soy sauce and the fish, then shape sushi yourself and feel how hard it is. At night, a master’s counter gives you the answer.": "昼は醤油と魚を知り、自分で握ってその難しさを知る。夜は職人のカウンターで、答え合わせをします。",
+ "The soy sauce comes from Torii Shoyu, a hundred-year-old brewery in a registered cultural property on Ipponsugi Street. In the afternoon, a local sushi chef teaches your group to shape a few pieces — just a few, to save room for dinner. Dinner is at Taisho Sushi near the station, where you sit with the regulars and eat what they eat.": "醤油は、一本杉通りの国登録有形文化財の建物で100年続く、鳥居醤油店のもの。午後は地元の鮨職人に、数貫だけ握り方を習います（夕食のためにお腹は空けておきます）。夕食は駅近くの大将寿司で、常連さんと同じ席に座り、同じものをいただきます。",
+ "10:00 – 22:00 · Mondays, Thursdays, Fridays": "10:00〜22:00・月／木／金曜",
+ "Morning at the fish market — choose the fish": "朝の市場で、握る魚を選ぶ",
+ "Torii Shoyu soy sauce brewery": "鳥居醤油店の蔵を見る",
+ "Shape your own nigiri at Chiyozushi": "千代ずしで、自分で握る",
+ "Free time — rest at your inn": "自由時間（宿で休憩）",
+ "Dinner at the counter of Taisho Sushi": "大将寿司のカウンターで夕食",
+ "Nanao Station, on foot": "七尾駅（町なかは歩いて回る）",
+ "Brewery visit, sushi lesson, sushi dinner, one drink, guide. Tell us if anyone does not eat raw fish.": "醤油蔵の見学、握りの手ほどき、鮨の夕食、一杯、案内。生ものが苦手な方は、申込のときにお知らせください。",
+ "III — Activity": "III — アクティビティ",
+ "On water so still it barely moves": "ほとんど波の立たない湾の上で",
+ "Next season · from May 2027": "次の季節・2027年5月から",
+ "Off Notojima Island": "能登島の沖",
+ "Paddle the calm water off Notojima Island in the morning, work in a rice field in the afternoon, and end with dinner upstairs at an old shop in town.": "午前は能登島の沖の穏やかな湾をSUPで漕ぎ、午後は田んぼに入る。夜は町の古い店の2階で夕食をとります。",
+ "Nanao Bay is enclosed by Notojima Island, so the water is usually flat enough for first-timers. The paddle is with a local outdoor guide and only your group on the water. In season, the afternoon is rice planting (May) or harvest (September). This year’s season has ended. Join the waitlist and we will write to you first when dates for May 2027 open.": "七尾湾は能登島に囲まれていて、初めての方でも漕ぎやすい水面です。地元のアウトドアガイドと、1組だけで海に出ます。午後は時期によって田植え（5月）か稲刈り（9月）。今年の季節は終わりました。空き待ちに登録いただくと、2027年5月の日程が決まったときに最初にお知らせします。",
+ "8:00 – 21:00": "8:00〜21:00",
+ "SUP off Notojima, private, about 2.5 hours": "能登島でSUP（貸切・約2時間半）",
+ "Lunch at an island diner": "島の食堂で昼食",
+ "Rice planting (May) or harvest (September)": "田植え（5月）か稲刈り（9月）",
+ "Rest at your inn in Wakura Onsen": "和倉温泉の宿で休憩",
+ "Dinner upstairs at Umimachi Shoten": "うみまち商店の2階で夕食",
+ "Season": "時期",
+ "Next from May 2027": "次は2027年5月から",
+ "SUP with a local outdoor guide, rice field work, dinner, guide": "地元ガイドとのSUP、田んぼの作業、夕食、案内",
+ "Join the waitlist": "空き待ちに登録する",
+ "Before you book": "ご予約の前に",
+ "ご予約の前に": "BEFORE YOU BOOK",
+ "Is it all right to visit Noto now?": "いま能登に行っても大丈夫？",
+ "Yes. The 2024 earthquake hit the peninsula hard, and Nanao is still rebuilding. The places on these days are open, and we confirm every stop before we confirm your date. Coming here, eating here and paying local makers is one of the most direct ways to help.": "はい。2024年の地震で半島は大きな被害を受け、七尾もまだ復興の途中です。この3つの日に訪ねる先は営業していて、日程を確定する前に、すべての訪問先に受け入れを確かめます。来て、食べて、作り手にお金を払うことが、いちばん直接の応援になります。",
+ "Who will be with you": "誰が案内するか",
+ "A small team that lives in Nanao. We run SandBoxConnections, a local company working with the town’s shops, makers and community groups. One of us stays with you the whole day and speaks English.": "七尾で暮らす小さなチームです。合同会社SandBoxConnectionsとして、町の店や作り手、地域の団体と仕事をしています。私たちのうち1人が、1日中ご一緒します。",
+ "What your day pays for": "お代に含まれるもの",
+ "Only your group, all day, with a local host": "1日まるごと1組だけの貸切。地元の案内人が付き添います",
+ "Time with the people themselves — the brewer, the chef, the outdoor guide — arranged for you": "醤油蔵の人、鮨職人、アウトドアガイドなど、作り手本人と過ごす時間の手配",
+ "Every workshop, meal and entry on the day": "当日の体験・食事・入場料すべて",
+ "How booking works": "申込の流れ",
+ "Send a request with your day, two dates, and the size of your group.": "希望の日・候補日2つ・人数をお送りください。",
+ "We check with every stop and reply by email within 48 hours.": "すべての訪問先に確かめて、48時間以内にメールでお返事します。",
+ "You receive a secure card payment link. Your day is held once it is paid.": "カード決済のリンクをお送りします。お支払いが済んだ時点で予約が確定します。",
+ "If plans change": "キャンセルについて",
+ "Free cancellation up to 14 days before your day. 50% is refunded from 13 to 4 days before; within 3 days, no refund. If weather or one of our hosts makes the day impossible, we offer another date or a full refund.": "14日前までは無料です。13日前から4日前までは50%を返金し、3日前を過ぎると返金はできません。天候や受け入れ先の都合で実施できない場合は、別の日をご案内するか、全額を返金します。",
+ "Prices include consumption tax (10%). Lodging and travel to Nanao Station are not included.": "表示価格は消費税（10%）込みです。宿泊と、七尾駅までの交通費は含みません。",
+ "Getting to Nanao": "七尾への行き方",
+ "Every day starts and ends at Nanao Station, in the middle of the Noto Peninsula, on the JR Nanao Line from Kanazawa.": "どの日も、能登半島の真ん中にある七尾駅に集合・解散です。金沢からJR七尾線で来られます。",
+ "The days end in the evening, after the last train back to Kanazawa has left. Plan to stay the night in Nanao or at Wakura Onsen nearby.": "終わるのは夜で、金沢へ戻る列車はもうありません。七尾市内か、近くの和倉温泉に1泊してください。",
+ "Your day": "希望の日",
+ "Sushi": "鮨",
+ "Waitlist · May 2027": "空き待ち・2027年5月",
+ "First choice": "第1希望",
+ "Second choice": "第2希望",
+ "Guests": "人数",
+ "Staying in Japan at": "当日の宿泊地",
+ "Name": "お名前",
+ "Email": "メールアドレス",
+ "Food, allergies, anything else": "食事・アレルギー・そのほか",
+ "Thank you.": "ありがとうございます。",
+ "SandBoxConnections LLC · Nanao, Ishikawa, Japan": "合同会社SandBoxConnections・石川県七尾市",
+ "Photo of Torii Shoyu brewery: READYFOR “Torii Shoyu”": "鳥居醤油店の写真：READYFOR「鳥居醤油店」"
+};
+const UI = {
+  en: { title: "Noto, Slowly — Private days in Nanao", barName: "Three private days", barPrice: "from ¥165,000<span>per person</span>", unit: "per person · incl. tax", yen: n => "¥" + n, reqBtn: "Request a date", waitBtn: "Join the waitlist", send: "Send request", sending: "Sending…", reqTitle: "Request a day", waitTitle: "Join the waitlist", reqLead: "This is a request, not a payment. A person in Nanao reads every one and replies by email.", waitLead: "No dates and no payment for now. We will write to you first when dates for May 2027 open.", errReq: "Please choose a day, a date, the number of guests, your name and email.", errWait: "Please choose the number of guests, your name and email.", errSend: "Sorry, your request could not be sent. Please try again in a moment.", doneReq: "We have your request and will reply by email within 48 hours.", doneWait: "You are on the waitlist. We will write to you first when dates for May 2027 open.", switchTo: "日本語", switchLabel: "日本語で表示", placeholder: "Kanazawa, Fukuoka…" },
+  ja: { title: "Noto, Slowly — 七尾で過ごす貸切の1日", barName: "貸切の3つの1日", barPrice: "165,000円〜<span>1名</span>", unit: "1名・税込", yen: n => n + "円", reqBtn: "日程を申し込む", waitBtn: "空き待ちに登録", send: "申込を送る", sending: "送信中…", reqTitle: "この日を申し込む", waitTitle: "空き待ちに登録する", reqLead: "この段階でお支払いは発生しません。七尾の私たちがすべてに目を通し、メールでお返事します。", waitLead: "日付もお支払いも、いまは要りません。2027年5月の日程が決まったら、最初にお知らせします。", errReq: "希望の日・第1希望・人数・お名前・メールアドレスを入れてください。", errWait: "人数・お名前・メールアドレスを入れてください。", errSend: "送信できませんでした。少し時間をおいて、もう一度お試しください。", doneReq: "申込を受け取りました。48時間以内にメールでお返事します。", doneWait: "空き待ちに登録しました。2027年5月の日程が決まったら、最初にお知らせします。", switchTo: "EN", switchLabel: "Show in English", placeholder: "例：和倉温泉、金沢" }
+};
+const norm = h => h.replace(/\s+/g, " ").trim();
+const OK_INLINE = new Set(["I", "EM", "BR"]);
+const leaves = [...document.querySelectorAll("body *")].filter(el => !["SCRIPT", "STYLE", "TIME", "OPTION", "SELECT", "TEXTAREA", "INPUT", "IMG", "BUTTON"].includes(el.tagName)
+  && !el.closest("#bar") && [...el.children].every(c => OK_INLINE.has(c.tagName)) && el.textContent.trim());
+const DYNAMIC = new Set(["reqTitle", "reqLead", "doneMsg"]); // 文言はスクリプトが T() で入れる
+for (let i = leaves.length - 1; i >= 0; i--) if (DYNAMIC.has(leaves[i].id) || leaves.includes(leaves[i].parentElement)) leaves.splice(i, 1); // 親ごと訳す要素（見出しの中の斜体など）は外す
+leaves.forEach(el => el.dataset.en = norm(el.innerHTML));
+let LANG = "en";
+const T = k => UI[LANG][k];
+function setLang(l) {
+  LANG = l === "ja" ? "ja" : "en";
+  document.documentElement.lang = LANG;
+  document.title = T("title");
+  const miss = [];
+  leaves.forEach(el => {
+    if (LANG === "en") { el.innerHTML = el.dataset.en; return; }
+    if (el.dataset.en in JA) el.innerHTML = JA[el.dataset.en]; else if (/[A-Za-z]{3}/.test(el.dataset.en) && el.dataset.en !== "Noto, Slowly") miss.push(el.dataset.en);
+  });
+  form.staying.placeholder = T("placeholder");
+  const b = document.getElementById("langBtn");
+  b.textContent = T("switchTo"); b.lang = LANG === "ja" ? "en" : "ja"; b.setAttribute("aria-label", T("switchLabel"));
+  try { localStorage.nsLang = LANG; } catch {}
+  const u = new URL(location.href); u.searchParams.set("lang", LANG); history.replaceState(null, "", u);
+  syncMode(); resetBar();
+  if (LANG === "ja" && miss.length) console.warn("[i18n] 訳がない文", miss);
+  if (Q.has("check")) { const d = document.getElementById("i18ncheck") || document.body.appendChild(Object.assign(document.createElement("pre"), { id: "i18ncheck" })); d.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:99;background:#300;color:#fff;font-size:11px;max-height:40vh;overflow:auto;padding:8px;white-space:pre-wrap"; d.textContent = LANG === "ja" ? "訳がない文 " + miss.length + "件\n" + miss.join("\n") : "（英語表示）"; }
+}
+
 // ===== 申込と計測の受け口＝GAS（gas/Code.gs）→ スプレッドシート「Noto Slowly LP 計測」 =====
 // 配るリンクは末尾に ?src=名前（例 ?src=colive）。自分で試すときは #test（記録はされるが集計から外れる）
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbzpsUj1l8gusjvJQfsgudRZ1zF40k1MA-iro1B3Cb0VvdK1b2blYnmIMe4Z5GZnJl3f/exec";
-const Q = new URLSearchParams(location.search);
 const SRC = (Q.get("src") || "direct").replace(/[^\w-]/g, "").slice(0, 40) || "direct";
 const TEST = location.hash === "#test" || Q.has("test");
 const rid = () => Math.random().toString(36).slice(2, 12);
@@ -476,15 +644,13 @@ const SID = (() => { try { return sessionStorage.nsSid || (sessionStorage.nsSid 
 const VID = (() => { try { return localStorage.nsVid || (localStorage.nsVid = rid()); } catch { return ""; } })(); // 2回目に来た人を見分ける
 let REF = ""; try { REF = document.referrer ? new URL(document.referrer).hostname : ""; } catch {}
 function payload(type, data) {
-  return JSON.stringify({ type, sid: SID, vid: VID, src: SRC, test: TEST, ref: REF, lang: navigator.language, tz: Intl.DateTimeFormat().resolvedOptions().timeZone, mobile: matchMedia("(max-width:760px)").matches, vw: innerWidth, ...data });
+  return JSON.stringify({ type, sid: SID, vid: VID, src: SRC, test: TEST, ui: LANG, ref: REF, lang: navigator.language, tz: Intl.DateTimeFormat().resolvedOptions().timeZone, mobile: matchMedia("(max-width:760px)").matches, vw: innerWidth, ...data });
 }
 function send(type, data) {
   const body = payload(type, data);
   if (!ENDPOINT || location.hostname === "localhost") { console.debug("[track]", body); if (!ENDPOINT || !TEST) return; }
   try { navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "text/plain" })); } catch {}
 }
-send("view", {});
-
 // どこまで下りたか（25/50/75/100%・1回ずつ）
 const depthSent = new Set();
 addEventListener("scroll", () => {
@@ -501,9 +667,6 @@ const enterIo = new IntersectionObserver(es => es.forEach(e => {
 }), { rootMargin: "-50% 0px -50% 0px" }); // 画面の真ん中の線を区画が通ったら＝長いツアーの区画でも取れる
 document.querySelectorAll("[data-sec]").forEach(s => enterIo.observe(s));
 
-const hd = document.getElementById("hd"), bar = document.getElementById("bar"), ground = document.querySelector(".ground");
-const barName = document.getElementById("barName"), barPrice = document.getElementById("barPrice"), barBtn = document.getElementById("barBtn");
-
 // 順番＝惹きつける → 値段 → 申込（本人 10/6）。値段バーは、ツアーの値段の行を一度見てから出す。
 // ヒーロー・序文・写真・物語の間は値段を出さない。申込欄の中では隠す。
 let pastHero = false, inReq = false, priceSeen = false;
@@ -518,13 +681,18 @@ const priceIo = new IntersectionObserver(es => es.forEach(e => {
 }), { threshold: .6 });
 document.querySelectorAll(".tour .terms").forEach(t => priceIo.observe(t));
 
-// 地の色と値段バー：画面の中央にあるツアーに合わせる
+// 地の色と値段バー：画面の中央にあるツアーに合わせる（言語を切り替えたときも resetBar で書き直す）
+let barSection = null;
+function resetBar() {
+  const s = barSection, ja = LANG === "ja";
+  if (s) { barName.textContent = (ja && s.dataset.nameJa) || s.dataset.name; barPrice.innerHTML = T("yen")(s.dataset.price) + "<span>" + T("unit") + "</span>"; barBtn.dataset.tour = s.id; barBtn.textContent = (ja ? s.dataset.ctaJa : s.dataset.cta) || T("reqBtn"); }
+  else { barName.textContent = T("barName"); barPrice.innerHTML = T("barPrice"); barBtn.dataset.tour = ""; barBtn.textContent = T("reqBtn"); } // ツアーの外＝特定のツアーを指さない
+}
 const tintIo = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return;
   const s = e.target;
   ground.style.setProperty("--tint", s.dataset.tint);
-  if (s.dataset.price) { barName.innerHTML = s.dataset.name; barPrice.innerHTML = `¥${s.dataset.price}<span>per person · excl. tax</span>`; barBtn.dataset.tour = s.id; barBtn.textContent = s.dataset.cta || "Request a date"; }
-  else { barName.textContent = "Three private days"; barPrice.innerHTML = "from ¥150,000<span>per person</span>"; barBtn.dataset.tour = ""; barBtn.textContent = "Request a date"; } // ツアーの外＝特定のツアーを指さない
+  barSection = s.dataset.price ? s : null; resetBar();
 }), { rootMargin: "-45% 0px -45% 0px" });
 document.querySelectorAll("[data-tint]").forEach(s => tintIo.observe(s));
 
@@ -553,7 +721,6 @@ addEventListener("visibilitychange", () => { if (document.visibilityState === "h
 addEventListener("pagehide", sendDwell);
 
 // フォーム
-const form = document.getElementById("form");
 let formOpened = false;
 // SUPは来季（2027年5月）の空き待ち＝日付を聞かない・ボタンと見出しを切り替える
 const isWait = () => form.tour.value === "sup";
@@ -561,17 +728,17 @@ function syncMode() {
   const w = isWait();
   document.getElementById("dates").style.display = w ? "none" : "";
   form.date1.required = !w;
-  document.getElementById("sendBtn").textContent = w ? "Join the waitlist" : "Send request";
-  document.getElementById("reqTitle").textContent = w ? "Join the waitlist" : "Request a day";
-  document.getElementById("reqLead").textContent = w ? "No dates and no payment for now. We will write to you first when dates for May 2027 open." : "This is a request, not a payment. A person in Nanao reads every one and replies by email.";
+  document.getElementById("sendBtn").textContent = T(w ? "waitBtn" : "send");
+  document.getElementById("reqTitle").textContent = T(w ? "waitTitle" : "reqTitle");
+  document.getElementById("reqLead").textContent = T(w ? "waitLead" : "reqLead");
 }
 form.querySelectorAll("input[name=tour]").forEach(r => r.addEventListener("change", syncMode));
 form.addEventListener("focusin", () => { if (!formOpened) { formOpened = true; send("open_form", { tour: form.tour.value || "" }); } });
 form.addEventListener("submit", async ev => {
   ev.preventDefault();
   const err = document.getElementById("err"), btn = form.querySelector("button");
-  if (!form.checkValidity()) { err.textContent = isWait() ? "Please choose the number of guests, your name and email." : "Please choose a day, a date, the number of guests, your name and email."; return; }
-  err.textContent = ""; btn.disabled = true; btn.textContent = "Sending…";
+  if (!form.checkValidity()) { err.textContent = T(isWait() ? "errWait" : "errReq"); return; }
+  err.textContent = ""; btn.disabled = true; btn.textContent = T("sending");
   const f = Object.fromEntries(new FormData(form));
   f.kind = isWait() ? "waitlist" : "request";
   if (f.kind === "waitlist") { f.date1 = ""; f.date2 = ""; }
@@ -581,11 +748,11 @@ form.addEventListener("submit", async ev => {
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
     } else console.debug("[request]", f);
-    if (f.kind === "waitlist") document.getElementById("doneMsg").textContent = "You are on the waitlist. We will write to you first when dates for May 2027 open.";
+    document.getElementById("doneMsg").textContent = T(f.kind === "waitlist" ? "doneWait" : "doneReq");
     form.style.display = "none";
     document.getElementById("done").style.display = "block";
   } catch (x) {
-    err.textContent = "Sorry, your request could not be sent. Please try again in a moment.";
+    err.textContent = T("errSend");
     btn.disabled = false; syncMode();
   }
 });
@@ -595,6 +762,12 @@ form.querySelectorAll("input[type=date]").forEach(i => i.min = today);
 // スクロールでふわっと表示（写真は寄りから引きへ）
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
 document.querySelectorAll(".fi").forEach(el => io.observe(el));
+
+// 言語を決める：?lang= → 前に選んだ言語 → ブラウザの言語（view はこのあと送る）
+{ let saved = ""; try { saved = localStorage.nsLang || ""; } catch {}
+  setLang(Q.get("lang") || saved || ((navigator.language || "").toLowerCase().startsWith("ja") ? "ja" : "en")); }
+document.getElementById("langBtn").addEventListener("click", () => { setLang(LANG === "ja" ? "en" : "ja"); send("view", { switched: true }); });
+send("view", {});
 </script>
 </body>
 </html>
