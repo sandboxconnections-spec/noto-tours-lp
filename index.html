@@ -67,6 +67,7 @@ html[lang=ja] .three b{font:400 23px/1.4 var(--mincho);letter-spacing:.1em}
 html[lang=ja] .tour__title h2{font:400 clamp(32px,4.4vw,54px)/1.3 var(--mincho);letter-spacing:.14em}
 html[lang=ja] .tour__title .theme{font:400 16px/1.8 var(--mincho);letter-spacing:.14em}
 html[lang=ja] .story .lead{font:400 21px/2 var(--mincho);letter-spacing:.06em}
+html[lang=ja] .story .lead,html[lang=ja] .story .txt,html[lang=ja] .prologue p,html[lang=ja] .qa p{text-wrap:pretty}
 html[lang=ja] .day h3,html[lang=ja] .qa h3,html[lang=ja] .access h2,html[lang=ja] .how h2,html[lang=ja] .req__head h2,html[lang=ja] .done h3{font-family:var(--mincho);font-weight:400;letter-spacing:.1em}
 html[lang=ja] .day h3{font-size:24px}html[lang=ja] .qa h3{font-size:18px;letter-spacing:.04em}
 html[lang=ja] .how h2,html[lang=ja] .req__head h2{font-size:32px}html[lang=ja] .access h2{font-size:28px}
@@ -82,6 +83,8 @@ html[lang=ja] .bar__l b{font-family:var(--serif)}
 @keyframes slide{0%{opacity:0;transform:scale(1.02)}6%{opacity:1}33%{opacity:1}40%{opacity:0;transform:scale(1.1)}100%{opacity:0}}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.15) 40%,rgba(0,0,0,.7))}
 .hero__in{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px}
+.vsub{margin-top:18px;font:400 11px/1 var(--sans);letter-spacing:.32em;color:rgba(255,255,255,.82)}
+html[lang=ja] .vsub{display:none}
 .vmark{writing-mode:vertical-rl;font:400 17px/1 var(--mincho);letter-spacing:.7em;padding-top:.7em;margin-bottom:0;border-right:1px solid rgba(255,255,255,.5);padding-right:12px}
 .hero h1{font:300 clamp(34px,5.2vw,64px)/1.25 var(--serif);letter-spacing:.04em}
 .hero h1 i{font-style:italic}
@@ -250,6 +253,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
   </div>
   <div class="hero__in">
     <p class="vmark" lang="ja">能登七尾</p>
+    <p class="vsub" aria-hidden="true">NANAO · NOTO</p>
     <h1 class="sr">Noto, Slowly — private journeys in Nanao</h1>
   </div>
   <span class="scroll" aria-hidden="true"></span>
@@ -327,7 +331,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
       </figure>
       <div class="story">
         <div class="fi">
-          <p class="lead">See how the soy sauce is made, then stand in the rice terraces where the rice is grown. At night, a master’s counter brings it all together.</p>
+          <p class="lead">See how the soy sauce is made, then on to the terraces where the rice grows. At night, a sushi master’s counter brings it all together.</p>
           <p class="txt">Torii Shoyu has brewed soy sauce for a hundred years, in a building registered as a cultural property. The rice terraces are shown to you by a grower who moved to Nakanoto and lives in an old farmhouse. At Taisho Sushi you sit with the regulars and eat what they eat.</p>
         </div>
         <div class="side fi">
@@ -521,6 +525,7 @@ const form = document.getElementById("form");
 // ===== 言語（英語＝HTMLそのもの／日本語＝下の対応表で差し替え）。正本はこの1ファイルだけ（2ファイルに分けない＝ずれるため） =====
 // 英語の文を直したら、JA の左側（英語の文）も同じに直す。直し忘れは ?lang=ja&check で画面の上に一覧が出る
 const JA = {
+ "NANAO · NOTO": "NANAO · NOTO",
  "Mindfulness": "マインドフルネス",
  "Gourmet": "グルメ",
  "Activity": "アクティビティ",
@@ -565,7 +570,7 @@ const JA = {
  "II — Gourmet": "II — グルメ",
  "From the soy brewery and the rice fields to the counter": "醤油の蔵と田んぼから、鮨のカウンターまで",
  "Taisho Sushi, Nanao": "大将寿司（七尾市）",
- "See how the soy sauce is made, then stand in the rice terraces where the rice is grown. At night, a master’s counter brings it all together.": "醤油がどうつくられるかを見て、米が育つ棚田に立つ。夜は職人のカウンターで、そのすべてを味わいます。",
+ "See how the soy sauce is made, then on to the terraces where the rice grows. At night, a sushi master’s counter brings it all together.": "醤油がどうつくられるかを見て、米が育つ棚田へ。<br>夜は鮨職人のカウンターで、そのすべてを味わいます。",
  "Torii Shoyu has brewed soy sauce for a hundred years, in a building registered as a cultural property. The rice terraces are shown to you by a grower who moved to Nakanoto and lives in an old farmhouse. At Taisho Sushi you sit with the regulars and eat what they eat.": "鳥居醤油店は、一本杉通りの国登録有形文化財の建物で100年続く醤油蔵です。棚田を案内するのは、中能登に移り住み、古民家で暮らしながら米をつくる方。大将寿司では、常連さんと同じ席で、同じものをいただきます。",
  "10:00 – 22:00 · Mondays, Tuesdays, Thursdays, Fridays": "10:00〜22:00・月／火／木／金曜",
  "Torii Shoyu — see how the soy sauce is made": "鳥居醤油店で、醤油がどうつくられるかを見る",
