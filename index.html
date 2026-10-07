@@ -46,10 +46,12 @@ main,.hero,footer{position:relative;z-index:1}
 /* ===== header ===== */
 .hd{position:fixed;inset:0 0 auto;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:50;transition:background .6s,height .6s}
 .hd.solid{background:rgba(11,12,11,.72);backdrop-filter:blur(10px);height:60px}
-.hd__logo{font:300 22px/1 var(--serif);letter-spacing:.24em;text-transform:uppercase}
+.hd__logo{display:block;line-height:0}
+.hd__logo img{width:42px;height:42px;transition:width .6s,height .6s}
+.hd.solid .hd__logo img{width:36px;height:36px}
 .hd nav{display:flex;gap:34px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sub)}
 .hd nav a:hover{color:var(--ink)}
-@media (max-width:760px){.hd nav{display:none}.hd{padding:0 20px}.hd__logo{font-size:18px}}
+@media (max-width:760px){.hd nav{display:none}.hd{padding:0 20px}.hd__logo img{width:34px;height:34px}}
 
 .langbtn{margin-left:auto;margin-right:28px;background:none;border:1px solid var(--faint);color:var(--ink);font:400 11px/1 var(--sans);letter-spacing:.16em;padding:8px 12px;cursor:pointer}
 .langbtn:hover{border-color:var(--ink)}
@@ -237,7 +239,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
 <div class="ground" aria-hidden="true"></div>
 
 <header class="hd" id="hd">
-  <a class="hd__logo" href="#top">Noto, Slowly</a>
+  <a class="hd__logo" href="#top" aria-label="Noto, Slowly — top"><img src="img/notokuru-mark.png" alt="のとくる？" width="42" height="42"></a>
   <button class="langbtn" id="langBtn" type="button" lang="ja" aria-label="日本語で表示">日本語</button>
   <nav><a href="#zen">Mindfulness</a><a href="#sushi">Gourmet</a><a href="#sup">Activity</a><a href="#request" data-tour="">Request</a></nav>
 </header>
