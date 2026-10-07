@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Noto, Slowly — Private days in Nanao</title>
-<meta name="description" content="Three private days in Nanao, Noto: Zen and the sea, sushi and its origins, and paddling the bay. Up to 5 guests, hosted by locals.">
+<title>Noto, Slowly — Private journeys in Nanao</title>
+<meta name="description" content="Three private journeys in Nanao, Noto: Zen and the sea, sushi and its origins, and paddling the bay. For 2 to 5 guests, hosted by locals.">
 <!-- v1 2026-10-05：本人「高級感薄くね？星のやを参考に、パクリはダメだからアップデート」で作り直し。
      星のやから借りたのは"原理"だけ＝暗い地の質感・明朝の一行・余白・写真が主役・下の値段バー。
      自前の更新点＝①地の色がツアーごとに移る（苔→漆→藍）②下の値段バーが見ているツアーに切り替わる③縦書きの和名を写真の脇に添える。
      数字・行程の正本＝Cloude秘書/のとくる事業部/ノマド向けLP_3ツアー_工程と計測設計_2026-10-03.md -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Noto, Slowly — Three private days in Nanao">
-<meta property="og:description" content="Zen and the sea, sushi and its origins, and paddling the bay. Private days for 2 to 5, hosted by locals in English.">
+<meta property="og:title" content="Noto, Slowly — Private journeys in Nanao">
+<meta property="og:description" content="Zen and the sea, sushi and its origins, and paddling the bay. Private journeys for 2 to 5, hosted by locals.">
 <meta property="og:url" content="https://sandboxconnections-spec.github.io/noto-tours-lp/">
 <meta property="og:image" content="https://sandboxconnections-spec.github.io/noto-tours-lp/img/og.jpg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
@@ -78,10 +78,11 @@ html[lang=ja] .bar__l b{font-family:var(--serif)}
 @keyframes slide{0%{opacity:0;transform:scale(1.02)}6%{opacity:1}33%{opacity:1}40%{opacity:0;transform:scale(1.1)}100%{opacity:0}}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.15) 40%,rgba(0,0,0,.7))}
 .hero__in{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px}
-.vmark{writing-mode:vertical-rl;font:400 15px/1 var(--mincho);letter-spacing:.6em;padding-top:.6em;margin-bottom:44px;border-right:1px solid rgba(255,255,255,.5);padding-right:12px}
+.vmark{writing-mode:vertical-rl;font:400 17px/1 var(--mincho);letter-spacing:.7em;padding-top:.7em;margin-bottom:0;border-right:1px solid rgba(255,255,255,.5);padding-right:12px}
 .hero h1{font:300 clamp(34px,5.2vw,64px)/1.25 var(--serif);letter-spacing:.04em}
 .hero h1 i{font-style:italic}
 .hero .sub{margin-top:30px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .scroll{position:absolute;left:50%;bottom:28px;width:1px;height:56px;background:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,0));z-index:1;animation:drip 2.6s ease-in-out infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
@@ -154,7 +155,7 @@ a:focus-visible,.btn:focus-visible{outline:1px solid var(--ink);outline-offset:4
 .how h2{font:300 40px/1.3 var(--serif)}
 .how .jp{font:400 12px/1 var(--mincho);letter-spacing:.6em;color:var(--sub);margin-top:18px}
 .qa{max-width:760px;margin:72px auto 0;text-align:left;border-bottom:1px solid var(--faint)}
-.qa>div{display:grid;grid-template-columns:240px 1fr;gap:40px;padding:34px 0;border-top:1px solid var(--faint)}
+.qa>div{display:grid;grid-template-columns:270px 1fr;gap:40px;padding:34px 0;border-top:1px solid var(--faint)}
 .qa h3{font:300 22px/1.35 var(--serif)}
 .qa p,.qa li{color:var(--sub)}
 .qa ul,.qa ol{list-style:none}
@@ -245,24 +246,22 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
   </div>
   <div class="hero__in">
     <p class="vmark" lang="ja">能登七尾</p>
-    <h1>Sit still. <i>Eat well.</i><br>Get on the water.</h1>
-    <p class="sub">Three private days on the Noto Peninsula</p>
+    <h1 class="sr">Noto, Slowly — private journeys in Nanao</h1>
   </div>
   <span class="scroll" aria-hidden="true"></span>
 </section>
 
 <main>
   <section class="wrap prologue" data-sec="intro">
-    <p class="jp fi" lang="ja">ゆっくり、能登</p>
     <h2 class="fi">A quiet port town on a calm bay, an hour by train from Kanazawa. Three journeys to the people who make it, hosted by those of us who live here.</h2>
-    <p class="fi">Each day is private, for your group of up to five, with one of us beside you in English. You meet the people who brew the soy sauce, shape the sushi and keep the temple — never a tour counter.</p>
+    <p class="fi">Each day is private, for 2 to 5 guests. You meet the people who brew the soy sauce, shape the sushi and keep the temple.</p>
     <div class="rule fi"></div>
   </section>
 
   <nav class="three" aria-label="The three days" data-sec="index">
-    <a href="#zen"><small>I · Mindfulness</small><b>Zen &amp; Sea</b><span lang="ja">禅と海</span></a>
-    <a href="#sushi"><small>II · Gourmet</small><b>Sushi and Its Origins</b><span lang="ja">鮨の源流</span></a>
-    <a href="#sup"><small>III · Activity</small><b>Paddle the Bay</b><span lang="ja">湾を漕ぐ</span></a>
+    <a href="#zen"><small>I — Mindfulness</small><b>Zen &amp; Sea</b><span lang="ja">禅と海</span></a>
+    <a href="#sushi"><small>II — Gourmet</small><b>Sushi and Its Origins</b><span lang="ja">鮨の源流</span></a>
+    <a href="#sup"><small>III — Activity</small><b>Paddle the Bay</b><span lang="ja">湾を漕ぐ</span></a>
   </nav>
 
   <!-- ===== I MINDFULNESS ===== -->
@@ -280,8 +279,8 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
       </figure>
       <div class="story">
         <div class="fi">
-          <p class="lead">Learn zazen at a former head temple, eat in silence, work with your hands, and sit by the sea. End the day by lighting a candle you chose yourself.</p>
-          <p class="txt">Sojiji Soin was the head temple of the Soto school for almost 600 years. You learn the form of zazen and sit for thirty minutes. In the afternoon you carve a pattern into lacquer chopsticks at a craftsman’s shop, then pick a hand-made Japanese candle on Ipponsugi Street to light after dinner.</p>
+          <p class="lead">Learn zazen at a former head temple, eat in silence, work with your hands, and sit by the sea. Last, you light a candle you chose yourself.</p>
+          <p class="txt">Sojiji Soin was the head temple of the Soto school for almost 600 years. In the afternoon you carve a pattern into lacquer chopsticks at a craftsman’s shop, then pick a hand-made Japanese candle on Ipponsugi Street to light after dinner.</p>
         </div>
         <div class="side fi">
           <img src="img/zen-autumn.jpg" alt="Temple buildings among autumn maples" loading="lazy">
@@ -298,7 +297,6 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
           <li><time>14:35</time><span>Carve chinkin chopsticks at Araki</span></li>
           <li><time>16:00</time><span>Choose tonight’s candle on Ipponsugi Street</span></li>
           <li><time>17:15</time><span>Dinner, taken slowly</span></li>
-          <li><time>21:25</time><span>Light your candle</span></li>
         </ol>
       </div>
       <div class="terms fi">
@@ -326,7 +324,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
       <div class="story">
         <div class="fi">
           <p class="lead">See how the soy sauce is made, then stand in the rice terraces where the rice is grown. At night, a master’s counter brings it all together.</p>
-          <p class="txt">The day starts at Torii Shoyu, a hundred-year-old brewery in a registered cultural property on Ipponsugi Street, where you see how soy sauce is made. Lunch is at Chiyozushi, a sushi bar in town. In the afternoon we drive to Nakanoto to walk the terraced rice fields with a grower who moved here and lives in an old farmhouse, and learn how the rice is grown. Dinner is at Taisho Sushi near the station, where you sit with the regulars and eat what they eat.</p>
+          <p class="txt">Torii Shoyu has brewed soy sauce for a hundred years, in a building registered as a cultural property. The rice terraces are shown to you by a grower who moved to Nakanoto and lives in an old farmhouse. At Taisho Sushi you sit with the regulars and eat what they eat.</p>
         </div>
         <div class="side fi">
           <img src="img/soy-koji.jpg" alt="Koji being spread on wooden trays at a soy sauce brewery" loading="lazy">
@@ -371,7 +369,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
       <div class="story">
         <div class="fi">
           <p class="lead">Paddle the calm water off Notojima Island in the morning, work in a rice field in the afternoon, and end with dinner upstairs at an old shop in town.</p>
-          <p class="txt">Nanao Bay is enclosed by Notojima Island, so the water is usually flat enough for first-timers. The paddle is with a local outdoor guide and only your group on the water. In season, the afternoon is rice planting (May) or harvest (September). This year’s season has ended. Join the waitlist and we will write to you first when dates for May 2027 open.</p>
+          <p class="txt">Nanao Bay is enclosed by Notojima Island, so the water is usually flat enough for first-timers. The paddle is with a local outdoor guide and only your group on the water. In season, the afternoon is rice planting (May) or harvest (September). Join the waitlist and we will write to you first when dates for May 2027 open.</p>
         </div>
         <div class="side fi">
           <img src="img/terraces.jpg" alt="Rice terraces running down to the Sea of Japan" loading="lazy">
@@ -424,8 +422,8 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         <h3>How booking works</h3>
         <ol>
           <li>Send a request with your day, two dates, and the size of your group.</li>
-          <li>We check with every stop and reply by email within 48 hours.</li>
-          <li>We confirm your date by email. You pay on the day, by card or in cash.</li>
+          <li>We check with every stop and confirm your date by email within 48 hours.</li>
+          <li>You pay on the day, by card or in cash.</li>
         </ol>
       </div>
       <div class="fi">
@@ -506,7 +504,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
 </footer>
 
 <div class="bar" id="bar" aria-live="polite">
-  <div class="bar__l"><small id="barName">Three private days</small><b id="barPrice">from ¥165,000<span>per person</span></b></div>
+  <div class="bar__l"><small id="barName">Three private journeys</small><b id="barPrice">from ¥165,000<span>per person</span></b></div>
   <a class="btn" href="#request" id="barBtn" data-tour="">Request a date</a>
 </div>
 
@@ -523,14 +521,12 @@ const JA = {
  "Gourmet": "グルメ",
  "Activity": "アクティビティ",
  "Request": "申込",
- "Sit still. <i>Eat well.</i><br>Get on the water.": "静かに坐る。<br><i>よく味わう。</i><br>湾へ漕ぎ出す。",
- "Three private days on the Noto Peninsula": "能登・七尾で過ごす、貸切の3つの1日",
- "ゆっくり、能登": "NOTO, SLOWLY",
+ "Noto, Slowly — private journeys in Nanao": "Noto, Slowly — 能登・七尾の貸切の旅",
  "A quiet port town on a calm bay, an hour by train from Kanazawa. Three journeys to the people who make it, hosted by those of us who live here.": "金沢から電車で約1時間、穏やかな湾の港町。<br>ここで暮らす私たちが、<br>作り手のもとへご案内する3つの旅です。",
- "Each day is private, for your group of up to five, with one of us beside you in English. You meet the people who brew the soy sauce, shape the sushi and keep the temple — never a tour counter.": "どの日も1組だけの貸切で、2〜5名。私たちのうち1人が1日中ご一緒します。会うのは観光の窓口ではなく、醤油を仕込む人、鮨を握る人、寺を守る人です。",
- "I · Mindfulness": "I · マインドフルネス",
- "II · Gourmet": "II · グルメ",
- "III · Activity": "III · アクティビティ",
+ "Each day is private, for 2 to 5 guests. You meet the people who brew the soy sauce, shape the sushi and keep the temple.": "どの日も1組だけの貸切で、2〜5名。会うのは、醤油を仕込む人、鮨を握る人、寺を守る人です。",
+ "I — Mindfulness": "I — マインドフルネス",
+ "II — Gourmet": "II — グルメ",
+ "III — Activity": "III — アクティビティ",
  "Zen &amp; Sea": "禅と海",
  "禅と海": "Zen &amp; Sea",
  "Sushi and Its Origins": "鮨の源流をたどる",
@@ -550,10 +546,10 @@ const JA = {
  "¥220,000": "220,000円",
  "A drink by candlelight": "ろうそくの灯りで一杯",
  "I — Mindfulness": "I — マインドフルネス",
- "An hour of silence at a temple of six centuries": "六百年の禅寺で、黙って坐る",
+ "An hour of silence at a temple of six centuries": "600年の禅寺で、黙って坐る",
  "Sojiji Soin, Monzen": "總持寺祖院（輪島市門前町）",
- "Learn zazen at a former head temple, eat in silence, work with your hands, and sit by the sea. End the day by lighting a candle you chose yourself.": "かつての大本山で坐禅を習い、黙って食べ、手を動かし、海を前に坐る。最後は自分で選んだろうそくを灯して、1日を終えます。",
- "Sojiji Soin was the head temple of the Soto school for almost 600 years. You learn the form of zazen and sit for thirty minutes. In the afternoon you carve a pattern into lacquer chopsticks at a craftsman’s shop, then pick a hand-made Japanese candle on Ipponsugi Street to light after dinner.": "總持寺祖院は、約600年にわたって曹洞宗の大本山だった寺です。坐禅の作法を習い、30分坐ります。午後は職人の店で漆の箸に模様を彫り、一本杉通りで、夕食のあとに灯す和ろうそくを1本選びます。",
+ "Learn zazen at a former head temple, eat in silence, work with your hands, and sit by the sea. Last, you light a candle you chose yourself.": "かつての大本山で坐禅を習い、黙って食べ、手を動かし、海を前に坐る。最後に、自分で選んだろうそくを灯します。",
+ "Sojiji Soin was the head temple of the Soto school for almost 600 years. In the afternoon you carve a pattern into lacquer chopsticks at a craftsman’s shop, then pick a hand-made Japanese candle on Ipponsugi Street to light after dinner.": "總持寺祖院は、約600年にわたって曹洞宗の大本山だった寺です。午後は職人の店で漆の箸に模様を彫り、一本杉通りで、夕食のあとに灯す和ろうそくを1本選びます。",
  "8:15 – 21:30": "8:15〜21:30",
  "Sojiji Soin — walk up to the gate": "總持寺祖院へ。山門まで歩く",
  "Learn the form, sit for 30 minutes": "作法を習い、30分坐る",
@@ -561,27 +557,25 @@ const JA = {
  "Carve chinkin chopsticks at Araki": "漆陶舗あらきで沈金の箸を彫る",
  "Choose tonight’s candle on Ipponsugi Street": "一本杉通りで今夜のろうそくを選ぶ",
  "Dinner, taken slowly": "ゆっくりと夕食",
- "Light your candle": "ろうそくを灯して終わり",
  "Zazen instruction, chopstick workshop, your candle, dinner, guide": "坐禅の指導、箸づくり、ろうそく1本、夕食、案内",
  "II — Gourmet": "II — グルメ",
  "From the soy brewery and the rice fields to the counter": "醤油の蔵と田んぼから、鮨のカウンターまで",
  "Taisho Sushi, Nanao": "大将寿司（七尾市）",
  "See how the soy sauce is made, then stand in the rice terraces where the rice is grown. At night, a master’s counter brings it all together.": "醤油がどうつくられるかを見て、米が育つ棚田に立つ。夜は職人のカウンターで、そのすべてを味わいます。",
- "The day starts at Torii Shoyu, a hundred-year-old brewery in a registered cultural property on Ipponsugi Street, where you see how soy sauce is made. Lunch is at Chiyozushi, a sushi bar in town. In the afternoon we drive to Nakanoto to walk the terraced rice fields with a grower who moved here and lives in an old farmhouse, and learn how the rice is grown. Dinner is at Taisho Sushi near the station, where you sit with the regulars and eat what they eat.": "朝は、一本杉通りの国登録有形文化財の建物で100年続く鳥居醤油店で、醤油がどうつくられるかを見ます。昼は町の鮨屋、千代ずしで昼食。午後は中能登へ移り、移り住んで古民家で暮らしながら米をつくる方と棚田を歩き、米づくりについて学びます。夕食は駅近くの大将寿司で、常連さんと同じ席に座り、同じものをいただきます。",
+ "Torii Shoyu has brewed soy sauce for a hundred years, in a building registered as a cultural property. The rice terraces are shown to you by a grower who moved to Nakanoto and lives in an old farmhouse. At Taisho Sushi you sit with the regulars and eat what they eat.": "鳥居醤油店は、一本杉通りの国登録有形文化財の建物で100年続く醤油蔵です。棚田を案内するのは、中能登に移り住み、古民家で暮らしながら米をつくる方。大将寿司では、常連さんと同じ席で、同じものをいただきます。",
  "10:00 – 22:00 · Mondays, Tuesdays, Thursdays, Fridays": "10:00〜22:00・月／火／木／金曜",
  "Torii Shoyu — see how the soy sauce is made": "鳥居醤油店で、醤油がどうつくられるかを見る",
  "Lunch at Chiyozushi": "千代ずしで昼食",
  "To Nakanoto — walk the rice terraces with a local grower": "中能登へ。米をつくる方と棚田を歩く",
  "Free time — rest at your inn": "自由時間（宿で休憩）",
  "Dinner at the counter of Taisho Sushi": "大将寿司のカウンターで夕食",
- "Nanao Station, on foot": "七尾駅（町なかは歩いて回る）",
  "Brewery visit, sushi lunch, rice terrace visit, sushi dinner, one drink, guide. Tell us if anyone does not eat raw fish.": "醤油蔵の見学、鮨の昼食、棚田の見学、鮨の夕食、一杯、案内。生ものが苦手な方は、申込のときにお知らせください。",
  "III — Activity": "III — アクティビティ",
  "On water so still it barely moves": "ほとんど波の立たない湾の上で",
  "Next season · from May 2027": "次の季節・2027年5月から",
  "Off Notojima Island": "能登島の沖",
  "Paddle the calm water off Notojima Island in the morning, work in a rice field in the afternoon, and end with dinner upstairs at an old shop in town.": "午前は能登島の沖の穏やかな湾をSUPで漕ぎ、午後は田んぼに入る。夜は町の古い店の2階で夕食をとります。",
- "Nanao Bay is enclosed by Notojima Island, so the water is usually flat enough for first-timers. The paddle is with a local outdoor guide and only your group on the water. In season, the afternoon is rice planting (May) or harvest (September). This year’s season has ended. Join the waitlist and we will write to you first when dates for May 2027 open.": "七尾湾は能登島に囲まれていて、初めての方でも漕ぎやすい水面です。地元のアウトドアガイドと、1組だけで海に出ます。午後は時期によって田植え（5月）か稲刈り（9月）。今年の季節は終わりました。空き待ちに登録いただくと、2027年5月の日程が決まったときに最初にお知らせします。",
+ "Nanao Bay is enclosed by Notojima Island, so the water is usually flat enough for first-timers. The paddle is with a local outdoor guide and only your group on the water. In season, the afternoon is rice planting (May) or harvest (September). Join the waitlist and we will write to you first when dates for May 2027 open.": "七尾湾は能登島に囲まれていて、初めての方でも漕ぎやすい水面です。地元のアウトドアガイドと、1組だけで海に出ます。午後は時期によって田植え（5月）か稲刈り（9月）。空き待ちに登録いただくと、2027年5月の日程が決まったときに最初にお知らせします。",
  "8:00 – 21:00": "8:00〜21:00",
  "SUP off Notojima, private, about 2.5 hours": "能登島でSUP（貸切・約2時間半）",
  "Lunch at an island diner": "島の食堂で昼食",
@@ -595,7 +589,7 @@ const JA = {
  "Before you book": "ご予約の前に",
  "ご予約の前に": "BEFORE YOU BOOK",
  "Is it all right to visit Noto now?": "いま能登に行っても大丈夫？",
- "Yes. The 2024 earthquake hit the peninsula hard, and Nanao is still rebuilding. The places on these days are open, and we confirm every stop before we confirm your date. Coming here, eating here and paying local makers is one of the most direct ways to help.": "はい。2024年の地震で半島は大きな被害を受け、七尾もまだ復興の途中です。この3つの日に訪ねる先は営業していて、日程を確定する前に、すべての訪問先に受け入れを確かめます。来て、食べて、作り手にお金を払うことが、いちばん直接の応援になります。",
+ "Yes. The 2024 earthquake hit the peninsula hard, and Nanao is still rebuilding. The places on these days are open, and we confirm every stop before we confirm your date. Coming here, eating here and paying local makers is one of the most direct ways to help.": "はい。2024年の地震で半島は大きな被害を受け、七尾もまだ復興の途中です。この3つの旅で訪ねる先は営業していて、日程を確定する前に、すべての訪問先に受け入れを確かめます。来て、食べて、作り手にお金を払うことが、いちばん直接の応援になります。",
  "Who will be with you": "誰が案内するか",
  "A small team that lives in Nanao. We run SandBoxConnections, a local company working with the town’s shops, makers and community groups. One of us stays with you the whole day and speaks English.": "七尾で暮らす小さなチームです。合同会社SandBoxConnectionsとして、町の店や作り手、地域の団体と仕事をしています。私たちのうち1人が、1日中ご一緒します。",
  "What your day pays for": "お代に含まれるもの",
@@ -604,8 +598,8 @@ const JA = {
  "Every workshop, meal and entry on the day": "当日の体験・食事・入場料すべて",
  "How booking works": "申込の流れ",
  "Send a request with your day, two dates, and the size of your group.": "希望の日・候補日2つ・人数をお送りください。",
- "We check with every stop and reply by email within 48 hours.": "すべての訪問先に確かめて、48時間以内にメールでお返事します。",
- "We confirm your date by email. You pay on the day, by card or in cash.": "メールで日程を確定します。お支払いは当日、カードか現金で。",
+ "We check with every stop and confirm your date by email within 48 hours.": "すべての訪問先に確かめて、48時間以内にメールで日程を確定します。",
+ "You pay on the day, by card or in cash.": "お支払いは当日、カードか現金で。",
  "If plans change": "キャンセルについて",
  "Cancelling is free up to 14 days before your day. From 13 to 4 days before, the cancellation fee is 50% of the price; within 3 days, it is 100%. If weather or one of our hosts makes the day impossible, there is no fee and we offer another date.": "14日前までは無料です。13日前から4日前までは代金の50%、3日前を過ぎると100%をキャンセル料としていただきます。天候や受け入れ先の都合で実施できない場合はいただかず、別の日をご案内します。",
  "Prices include consumption tax (10%). Lodging and travel to Nanao Station are not included.": "表示価格は消費税（10%）込みです。宿泊と、七尾駅までの交通費は含みません。",
@@ -650,8 +644,8 @@ const JA = {
  "Tell us by email. Free up to 14 days before your day. From 13 to 4 days before, a cancellation fee of 50% of the price; within 3 days, 100%. No fee if weather or one of our hosts makes the day impossible; we offer another date instead.": "メールでご連絡ください。14日前までは無料、13日前から4日前までは代金の50%、3日前を過ぎると100%をキャンセル料としていただきます。天候や受け入れ先の都合で実施できない場合はいただかず、別の日をご案内します。"
 };
 const UI = {
-  en: { title: "Noto, Slowly — Private days in Nanao", barName: "Three private days", barPrice: "from ¥165,000<span>per person</span>", unit: "per person · incl. tax", yen: n => "¥" + n, reqBtn: "Request a date", waitBtn: "Join the waitlist", send: "Send request", sending: "Sending…", reqTitle: "Request a day", waitTitle: "Join the waitlist", reqLead: "Nothing to pay now — you pay on the day. A person in Nanao reads every request and replies by email.", waitLead: "No dates and no payment for now. We will write to you first when dates for May 2027 open.", errReq: "Please choose a day, a date, the number of guests, your name and email.", errWait: "Please choose the number of guests, your name and email.", errSend: "Sorry, your request could not be sent. Please try again in a moment.", doneReq: "We have your request and will reply by email within 48 hours.", doneWait: "You are on the waitlist. We will write to you first when dates for May 2027 open.", switchTo: "日本語", switchLabel: "日本語で表示", placeholder: "Kanazawa, Fukuoka…" },
-  ja: { title: "Noto, Slowly — 七尾で過ごす貸切の1日", barName: "貸切の3つの1日", barPrice: "165,000円〜<span>1名</span>", unit: "1名・税込", yen: n => n + "円", reqBtn: "日程を申し込む", waitBtn: "空き待ちに登録", send: "申込を送る", sending: "送信中…", reqTitle: "この日を申し込む", waitTitle: "空き待ちに登録する", reqLead: "いまはお支払いは不要です（当日払い）。七尾の私たちがすべてに目を通し、メールでお返事します。", waitLead: "日付もお支払いも、いまは要りません。2027年5月の日程が決まったら、最初にお知らせします。", errReq: "希望の日・第1希望・人数・お名前・メールアドレスを入れてください。", errWait: "人数・お名前・メールアドレスを入れてください。", errSend: "送信できませんでした。少し時間をおいて、もう一度お試しください。", doneReq: "申込を受け取りました。48時間以内にメールでお返事します。", doneWait: "空き待ちに登録しました。2027年5月の日程が決まったら、最初にお知らせします。", switchTo: "EN", switchLabel: "Show in English", placeholder: "例：和倉温泉、金沢" }
+  en: { title: "Noto, Slowly — Private journeys in Nanao", barName: "Three private journeys", barPrice: "from ¥165,000<span>per person</span>", unit: "per person · incl. tax", yen: n => "¥" + n, reqBtn: "Request a date", waitBtn: "Join the waitlist", send: "Send request", sending: "Sending…", reqTitle: "Request a day", waitTitle: "Join the waitlist", reqLead: "Nothing to pay now — you pay on the day. A person in Nanao reads every request and replies by email.", waitLead: "No dates and no payment for now. We will write to you first when dates for May 2027 open.", errReq: "Please choose a day, a date, the number of guests, your name and email.", errWait: "Please choose the number of guests, your name and email.", errSend: "Sorry, your request could not be sent. Please try again in a moment.", doneReq: "We have your request and will reply by email within 48 hours.", doneWait: "You are on the waitlist. We will write to you first when dates for May 2027 open.", switchTo: "日本語", switchLabel: "日本語で表示", placeholder: "Kanazawa, Fukuoka…" },
+  ja: { title: "Noto, Slowly — 能登・七尾の貸切の旅", barName: "貸切の3つの旅", barPrice: "165,000円〜<span>1名</span>", unit: "1名・税込", yen: n => n + "円", reqBtn: "日程を申し込む", waitBtn: "空き待ちに登録", send: "申込を送る", sending: "送信中…", reqTitle: "この日を申し込む", waitTitle: "空き待ちに登録する", reqLead: "いまはお支払いは不要です（当日払い）。七尾の私たちがすべてに目を通し、メールでお返事します。", waitLead: "日付もお支払いも、いまは要りません。2027年5月の日程が決まったら、最初にお知らせします。", errReq: "希望の日・第1希望・人数・お名前・メールアドレスを入れてください。", errWait: "人数・お名前・メールアドレスを入れてください。", errSend: "送信できませんでした。少し時間をおいて、もう一度お試しください。", doneReq: "申込を受け取りました。48時間以内にメールでお返事します。", doneWait: "空き待ちに登録しました。2027年5月の日程が決まったら、最初にお知らせします。", switchTo: "EN", switchLabel: "Show in English", placeholder: "例：和倉温泉、金沢" }
 };
 const norm = h => h.replace(/\s+/g, " ").trim();
 const OK_INLINE = new Set(["I", "EM", "BR"]);
