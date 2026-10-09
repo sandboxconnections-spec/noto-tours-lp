@@ -1,4 +1,4 @@
-# Noto, Slowly（3ツアーLP）
+# のとくる？ 3ツアーLP（旧称 Noto, Slowly）
 
 マインドフルネス／寿司／SUP の3つの1日ツアーを売るLP。申込はページ内フォーム → SBCが確定連絡 → Stripeのリンク。
 
