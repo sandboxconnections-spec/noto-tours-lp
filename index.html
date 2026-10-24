@@ -148,6 +148,13 @@ html[lang=ja] .vsub{display:none}
 .terms{margin-top:120px;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);padding:56px 0;display:grid;grid-template-columns:1.1fr 1fr 1fr auto;gap:40px;align-items:center}
 .terms .yen{font:300 44px/1 var(--serif);letter-spacing:.02em}
 .terms .yen small{display:block;font:300 11px/1.6 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--sub);margin-top:10px}
+/* 目安のドル額＝英語だけ（決済は円のまま）。日本語では出さない */
+.usd{font:300 13px/1 var(--sans);letter-spacing:.06em;color:var(--sub);margin-left:12px;white-space:nowrap}
+.terms .yen{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px}/* 幅が足りなければドル額は円の下へ回る */
+.terms .yen small{flex-basis:100%}
+.terms .usd{margin-left:0}
+.pick .usd{display:block;margin:4px 0 0;font-size:10px}
+html[lang=ja] .usd{display:none}
 .terms dl div{font-size:12px;color:var(--sub);line-height:1.9}
 .terms dt{display:inline;letter-spacing:.2em;text-transform:uppercase;font-size:10px;margin-right:10px;color:var(--ink)}
 .terms dd{display:inline}
@@ -309,7 +316,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         </ol>
       </div>
       <div class="terms fi">
-        <p class="yen"><span>¥165,000</span><small>per person · incl. tax</small></p>
+        <p class="yen"><span>¥165,000</span><span class="usd" data-yen="165,000"></span><small>per person · incl. tax</small></p>
         <dl><div><dt>Group</dt><dd>Private, 2 to 5</dd></div><div><dt>Meet</dt><dd>Nanao Station</dd></div></dl>
         <dl><div><dt>Includes</dt><dd>Zazen instruction, chopstick workshop, your candle, dinner, guide</dd></div></dl>
         <a class="btn" href="#request" data-tour="zen">Request this day</a>
@@ -353,7 +360,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         </ol>
       </div>
       <div class="terms fi">
-        <p class="yen"><span>¥220,000</span><small>per person · incl. tax</small></p>
+        <p class="yen"><span>¥220,000</span><span class="usd" data-yen="220,000"></span><small>per person · incl. tax</small></p>
         <dl><div><dt>Group</dt><dd>Private, 2 to 5</dd></div><div><dt>Meet</dt><dd>Nanao Station</dd></div></dl>
         <dl><div><dt>Includes</dt><dd>Brewery visit, sushi lunch, rice terrace visit, sushi dinner, one drink, guide. Tell us if anyone does not eat raw fish.</dd></div></dl>
         <a class="btn" href="#request" data-tour="sushi">Request this day</a>
@@ -397,7 +404,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
         </ol>
       </div>
       <div class="terms fi">
-        <p class="yen"><span>¥165,000</span><small>per person · incl. tax</small></p>
+        <p class="yen"><span>¥165,000</span><span class="usd" data-yen="165,000"></span><small>per person · incl. tax</small></p>
         <dl><div><dt>Group</dt><dd>Private, 2 to 5</dd></div><div><dt>Season</dt><dd>Next from May 2027</dd></div></dl>
         <dl><div><dt>Includes</dt><dd>SUP with a local outdoor guide, rice field work, dinner, guide</dd></div></dl>
         <a class="btn" href="#request" data-tour="sup">Join the waitlist</a>
@@ -461,8 +468,8 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
       <div class="f">
         <span>Your day</span>
         <div class="pick" role="radiogroup">
-          <label><input type="radio" name="tour" value="zen" required><b>Zen &amp; Sea</b><small>¥165,000</small></label>
-          <label><input type="radio" name="tour" value="sushi"><b>Sushi</b><small>¥220,000</small></label>
+          <label><input type="radio" name="tour" value="zen" required><b>Zen &amp; Sea</b><small>¥165,000</small><span class="usd" data-yen="165,000"></span></label>
+          <label><input type="radio" name="tour" value="sushi"><b>Sushi</b><small>¥220,000</small><span class="usd" data-yen="220,000"></span></label>
           <label><input type="radio" name="tour" value="sup"><b>Paddle the Bay</b><small>Waitlist · May 2027</small></label>
         </div>
       </div>
@@ -501,7 +508,7 @@ footer b{display:block;font:300 22px/1 var(--serif);letter-spacing:.24em;text-tr
       <div><dt>Address</dt><dd>Kanazawa Mirai no Machi Sozokan, 3-11-1 Nomachi, Kanazawa, Ishikawa, Japan</dd></div>
       <div><dt>Phone</dt><dd>+81 90-1281-0774</dd></div>
       <div><dt>Email</dt><dd>sandboxconnections@gmail.com</dd></div>
-      <div><dt>Price</dt><dd>As shown for each day, per person, including consumption tax</dd></div>
+      <div><dt>Price</dt><dd>As shown for each day, per person, including consumption tax. Dollar amounts are a rough guide; you pay in yen.</dd></div>
       <div><dt>Other costs</dt><dd>Lodging and travel to and from Nanao Station</dd></div>
       <div><dt>Payment</dt><dd>On the day, by credit card or in cash</dd></div>
       <div><dt>When to pay</dt><dd>On the day of the tour</dd></div>
@@ -521,6 +528,11 @@ const Q = new URLSearchParams(location.search);
 const hd = document.getElementById("hd"), bar = document.getElementById("bar"), ground = document.querySelector(".ground");
 const barName = document.getElementById("barName"), barPrice = document.getElementById("barPrice"), barBtn = document.getElementById("barBtn");
 const form = document.getElementById("form");
+
+// 英語だけ、円の横に目安のドル額（決済は円のまま）。レートは手で見直す＝2026-10-24 に 1ドル≒157円（10/21〜23 の相場 157〜158円）
+const USD_RATE = 157;
+const toUsd = yen => "approx. US$" + (Math.round(Number(String(yen).replace(/,/g, "")) / USD_RATE / 50) * 50).toLocaleString("en-US");
+document.querySelectorAll(".usd[data-yen]").forEach(el => el.textContent = toUsd(el.dataset.yen));
 
 // ===== 言語（英語＝HTMLそのもの／日本語＝下の対応表で差し替え）。正本はこの1ファイルだけ（2ファイルに分けない＝ずれるため） =====
 // 英語の文を直したら、JA の左側（英語の文）も同じに直す。直し忘れは ?lang=ja&check で画面の上に一覧が出る
@@ -639,7 +651,7 @@ const JA = {
  "Email": "メールアドレス",
  "sandboxconnections@gmail.com": "sandboxconnections@gmail.com",
  "Price": "販売価格",
- "As shown for each day, per person, including consumption tax": "各ツアーに表示（1名あたり・消費税込み）",
+ "As shown for each day, per person, including consumption tax. Dollar amounts are a rough guide; you pay in yen.": "各ツアーに表示（1名あたり・消費税込み）",
  "Other costs": "商品代金以外の必要料金",
  "Lodging and travel to and from Nanao Station": "宿泊費、七尾駅までの往復の交通費",
  "Payment": "支払方法",
@@ -652,13 +664,13 @@ const JA = {
  "Tell us by email. Free up to 14 days before your day. From 13 to 4 days before, a cancellation fee of 50% of the price; within 3 days, 100%. No fee if weather or one of our hosts makes the day impossible; we offer another date instead.": "メールでご連絡ください。14日前までは無料、13日前から4日前までは代金の50%、3日前を過ぎると100%をキャンセル料としていただきます。天候や受け入れ先の都合で実施できない場合はいただかず、別の日をご案内します。"
 };
 const UI = {
-  en: { title: "のとくる？ — Private journeys in Nanao", barName: "Three private journeys", barPrice: "from ¥165,000<span>per person</span>", unit: "per person · incl. tax", yen: n => "¥" + n, reqBtn: "Request a date", waitBtn: "Join the waitlist", send: "Send request", sending: "Sending…", reqTitle: "Request a day", waitTitle: "Join the waitlist", reqLead: "Nothing to pay now — you pay on the day. A person in Nanao reads every request and replies by email.", waitLead: "No dates and no payment for now. We will write to you first when dates for May 2027 open.", errReq: "Please choose a day, a date, the number of guests, your name and email.", errWait: "Please choose the number of guests, your name and email.", errSend: "Sorry, your request could not be sent. Please try again in a moment.", doneReq: "We have your request and will reply by email within 48 hours.", doneWait: "You are on the waitlist. We will write to you first when dates for May 2027 open.", switchTo: "日本語", switchLabel: "日本語で表示", placeholder: "Kanazawa, Fukuoka…" },
+  en: { title: "のとくる？ — Private journeys in Nanao", barName: "Three private journeys", barPrice: "from ¥165,000<span class=\"usd\">" + toUsd(165000) + "</span><span>per person</span>", unit: "per person · incl. tax", yen: n => "¥" + n + "<span class=\"usd\">" + toUsd(n) + "</span>", reqBtn: "Request a date", waitBtn: "Join the waitlist", send: "Send request", sending: "Sending…", reqTitle: "Request a day", waitTitle: "Join the waitlist", reqLead: "Nothing to pay now — you pay on the day. A person in Nanao reads every request and replies by email.", waitLead: "No dates and no payment for now. We will write to you first when dates for May 2027 open.", errReq: "Please choose a day, a date, the number of guests, your name and email.", errWait: "Please choose the number of guests, your name and email.", errSend: "Sorry, your request could not be sent. Please try again in a moment.", doneReq: "We have your request and will reply by email within 48 hours.", doneWait: "You are on the waitlist. We will write to you first when dates for May 2027 open.", switchTo: "日本語", switchLabel: "日本語で表示", placeholder: "Kanazawa, Fukuoka…" },
   ja: { title: "のとくる？ — 能登・七尾の貸切の旅", barName: "貸切の3つの旅", barPrice: "165,000円〜<span>1名</span>", unit: "1名・税込", yen: n => n + "円", reqBtn: "日程を申し込む", waitBtn: "空き待ちに登録", send: "申込を送る", sending: "送信中…", reqTitle: "この日を申し込む", waitTitle: "空き待ちに登録する", reqLead: "いまはお支払いは不要です（当日払い）。七尾の私たちがすべてに目を通し、メールでお返事します。", waitLead: "日付もお支払いも、いまは要りません。2027年5月の日程が決まったら、最初にお知らせします。", errReq: "希望の日・第1希望・人数・お名前・メールアドレスを入れてください。", errWait: "人数・お名前・メールアドレスを入れてください。", errSend: "送信できませんでした。少し時間をおいて、もう一度お試しください。", doneReq: "申込を受け取りました。48時間以内にメールでお返事します。", doneWait: "空き待ちに登録しました。2027年5月の日程が決まったら、最初にお知らせします。", switchTo: "EN", switchLabel: "Show in English", placeholder: "例：和倉温泉、金沢" }
 };
 const norm = h => h.replace(/\s+/g, " ").trim();
 const OK_INLINE = new Set(["I", "EM", "BR"]);
 const leaves = [...document.querySelectorAll("body *")].filter(el => !["SCRIPT", "STYLE", "TIME", "OPTION", "SELECT", "TEXTAREA", "INPUT", "IMG", "BUTTON"].includes(el.tagName)
-  && !el.closest("#bar") && [...el.children].every(c => OK_INLINE.has(c.tagName)) && el.textContent.trim());
+  && !el.closest("#bar") && !el.classList.contains("usd") && [...el.children].every(c => OK_INLINE.has(c.tagName)) && el.textContent.trim());
 const DYNAMIC = new Set(["reqTitle", "reqLead", "doneMsg"]); // 文言はスクリプトが T() で入れる
 for (let i = leaves.length - 1; i >= 0; i--) if (DYNAMIC.has(leaves[i].id) || leaves.includes(leaves[i].parentElement)) leaves.splice(i, 1); // 親ごと訳す要素（見出しの中の斜体など）は外す
 leaves.forEach(el => el.dataset.en = norm(el.innerHTML));
